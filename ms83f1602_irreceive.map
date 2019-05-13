@@ -1,0 +1,465 @@
+HI-TECH Software C Compiler 
+
+Linker command line:
+
+--edf=D:\Embedded\HI-TECH Software\PICC\9.83\dat\en_msgs.txt -cs \
+  -h+ms83f1602_irreceive.sym -z -Q16F685 -ol.obj -Mms83f1602_irreceive.map \
+  -E1 -ACONST=00h-0FFhx8 -ACODE=00h-07FFh -ASTRCODE=00h-07FFh \
+  -AENTRY=00h-0FFhx8 -ASTRING=00h-0FFhx8 -ABANK0=020h-06Fh \
+  -ABANK1=0A0h-0BFh -ARAM=020h-06Fh,0A0h-0BFh -AABS1=020h-07Fh,0A0h-0BFh \
+  -ACOMMON=070h-07Fh -ASFR0=00h-01Fh -ASFR1=080h-09Fh -ASFR2=0100h-016Fh \
+  -preset_vec=00h,intentry=04h,init,end_init -ppowerup=CODE -pfunctab=CODE \
+  -ACONFIG=02007h-02007h -pconfig=CONFIG -DCONFIG=2 -AIDLOC=02000h-02003h \
+  -pidloc=IDLOC -DIDLOC=2 -AEEDATA=00h-0FFh/02100h -peeprom_data=EEDATA \
+  -DEEDATA=2 -DCODE=2 -DSTRCODE=2 -DSTRING=2 -DCONST=2 -DENTRY=2 -k \
+  startup.obj ms83f1602_irreceive.obj 
+
+Object code version is 3.10
+
+Machine type is 16F685
+
+
+
+                Name                               Link     Load   Length Selector   Space Scale
+startup.obj     end_init                             10       10        1        8       0
+                reset_vec                             0        0        1        0       0
+ms83f1602_irreceive.obj
+                intentry                              4        4        C        8       0
+                text451                             2B8      2B8       1F        8       0
+                text450                              11       11       B4        8       0
+                text449                             336      336        5        8       0
+                text448                             21E      21E       2F        8       0
+                text447                             324      324        A        8       0
+                text446                             1BB      1BB       32        8       0
+                text445                             2D7      2D7       19        8       0
+                text444                             14F      14F       6C        8       0
+                text443                             31A      31A        A        8       0
+                text442                             310      310        A        8       0
+                text441                             2F0      2F0       15        8       0
+                text440                             275      275       23        8       0
+                text439                             1ED      1ED       31        8       0
+                text438                             24D      24D       28        8       0
+                text437                              C5       C5       8A        8       0
+                maintext                            298      298       20        8       0
+                cstackBANK0                          2B       2B        B       20       1
+                cstackCOMMON                         70       70        A       70       1
+                clrtext                             32E      32E        8        8       0
+                bssBANK0                             20       20        B       20       1
+                bssCOMMON                            7A       7A        4       70       1
+                cinit                               305      305        B        8       0
+
+TOTAL           Name                               Link     Load   Length     Space
+        CLASS   CONST          
+
+        CLASS   CODE           
+                end_init                             10       10        1         0
+                intentry                              4        4        C         0
+                reset_vec                             0        0        1         0
+                text451                             2B8      2B8       1F         0
+                text450                              11       11       B4         0
+                text449                             336      336        5         0
+                text448                             21E      21E       2F         0
+                text447                             324      324        A         0
+                text446                             1BB      1BB       32         0
+                text445                             2D7      2D7       19         0
+                text444                             14F      14F       6C         0
+                text443                             31A      31A        A         0
+                text442                             310      310        A         0
+                text441                             2F0      2F0       15         0
+                text440                             275      275       23         0
+                text439                             1ED      1ED       31         0
+                text438                             24D      24D       28         0
+                text437                              C5       C5       8A         0
+                maintext                            298      298       20         0
+                clrtext                             32E      32E        8         0
+                cinit                               305      305        B         0
+
+        CLASS   STRCODE        
+
+        CLASS   ENTRY          
+
+        CLASS   STRING         
+
+        CLASS   BANK0          
+                cstackBANK0                          2B       2B        B         1
+                bssBANK0                             20       20        B         1
+
+        CLASS   BANK1          
+
+        CLASS   RAM            
+
+        CLASS   ABS1           
+                abs_s1                               7E       7E        2         1
+                abs_s1                              18C      18C        1         1
+                abs_s1                              19D      19D        2         1
+
+        CLASS   COMMON         
+                cstackCOMMON                         70       70        A         1
+                bssCOMMON                            7A       7A        4         1
+
+        CLASS   SFR0           
+
+        CLASS   SFR1           
+
+        CLASS   SFR2           
+
+        CLASS   CONFIG         
+
+        CLASS   IDLOC          
+
+        CLASS   EEDATA         
+
+        CLASS   BANK2          
+
+
+
+SEGMENTS        Name                           Load    Length   Top    Selector   Space  Class     Delta
+
+                reset_vec                      000000  000001  000001         0       0  CODE        2
+                intentry                       000004  000337  00033B         8       0  CODE        2
+                bssBANK0                       000020  000016  000036        20       1  BANK0       1
+                cstackCOMMON                   000070  00000E  00007E        70       1  COMMON      1
+
+
+UNUSED ADDRESS RANGES
+
+        Name                Unused          Largest block    Delta
+        BANK0            036-06F            3A           1
+        BANK1            0A0-0BF            20           1
+        CODE             001-003             3           2
+                         33B-7FF           4C5
+        CONFIG           2007-2007             1           2
+        CONST            001-003             3           2
+                         33B-7FF           100
+        EEDATA           2100-21FF           100           2
+        ENTRY            001-003             3           2
+                         33B-7FF           100
+        IDLOC            2000-2003             4           2
+        RAM              036-06F            3A           1
+                         0A0-0BF            20
+        SFR0             000-01F            20           1
+        SFR1             080-09F            20           1
+        SFR2             100-16F            70           1
+        STRCODE          001-003             3           2
+                         33B-7FF           4C5
+        STRING           001-003             3           2
+                         33B-7FF           100
+
+                                  Symbol Table
+
+??_Clean_countReg             cstackCOMMON 070
+??_Control                    cstackBANK0  034
+??_Delay_xms                  cstackBANK0  02D
+??_GPIO_Init                  cstackBANK0  02B
+??_GetCCP1Value               cstackCOMMON 072
+??_ISR                        cstackCOMMON 076
+??_LED_Study_End              cstackBANK0  031
+??_Read_EEPROM_u8             cstackBANK0  02B
+??_System_init                cstackBANK0  02B
+??_Timer1_Init                cstackBANK0  02B
+??_VS1838ReceiveHandle        cstackCOMMON 072
+??_VS1838_Process             cstackBANK0  02B
+??_Write_EEPROM_u8            cstackBANK0  032
+??_isKeyPressed               cstackBANK0  02B
+??_isSwitchOn                 cstackBANK0  02B
+??_main                       cstackBANK0  035
+?_Clean_countReg              cstackCOMMON 070
+?_Control                     cstackCOMMON 070
+?_Delay_xms                   cstackBANK0  02B
+?_GPIO_Init                   cstackCOMMON 070
+?_GetCCP1Value                cstackCOMMON 070
+?_ISR                         cstackCOMMON 070
+?_LED_Study_End               cstackCOMMON 070
+?_Read_EEPROM_u8              cstackCOMMON 070
+?_System_init                 cstackCOMMON 070
+?_Timer1_Init                 cstackCOMMON 070
+?_VS1838ReceiveHandle         cstackCOMMON 070
+?_VS1838_Process              cstackCOMMON 070
+?_Write_EEPROM_u8             cstackBANK0  031
+?_isKeyPressed                cstackCOMMON 070
+?_isSwitchOn                  cstackCOMMON 070
+?_main                        cstackCOMMON 070
+Delay_xms@i                   cstackBANK0  02F
+Delay_xms@x                   cstackBANK0  02B
+GetCCP1Value@values           cstackCOMMON 074
+Read_EEPROM_u8@EEAddress      cstackBANK0  02C
+Read_EEPROM_u8@EepromData     cstackBANK0  02D
+VS1838ReceiveHandle@capdata   cstackCOMMON 070
+VS1838_Process@Address_H      cstackBANK0  030
+VS1838_Process@Address_L      cstackBANK0  031
+VS1838_Process@Data_H         cstackBANK0  033
+VS1838_Process@Data_L         cstackBANK0  032
+Write_EEPROM_u8@EEAddress     cstackBANK0  032
+Write_EEPROM_u8@EEDatas       cstackBANK0  031
+_ADCIN4                       bssBANK0     020
+_ADCON0                       (abs)        01F
+_ADCS0                        (abs)        4FC
+_ADCS1                        (abs)        4FD
+_ADCS2                        (abs)        4FE
+_ADFM                         (abs)        0FF
+_ADON                         (abs)        0F8
+_ADRESH                       (abs)        01E
+_ADRESL                       (abs)        09E
+_ANSEL0                       (abs)        488
+_ANSEL1                       (abs)        489
+_ANSEL2                       (abs)        48A
+_ANSEL3                       (abs)        48B
+_ANSEL4                       (abs)        48C
+_ANSEL5                       (abs)        48D
+_ANSEL6                       (abs)        48E
+_ANSEL7                       (abs)        48F
+_C1SEN                        (abs)        CF5
+_C2REN                        (abs)        CF4
+_CARRY                        (abs)        018
+_CCP1CON                      (abs)        015
+_CCP1IE                       (abs)        468
+_CCP1IF                       (abs)        068
+_CCPR1H                       (abs)        014
+_CCPR1L                       (abs)        013
+_CHS0                         (abs)        0FA
+_CHS1                         (abs)        0FB
+_CHS2                         (abs)        0FC
+_CM0                          (abs)        0C8
+_CM1                          (abs)        0C9
+_CM2                          (abs)        0CA
+_Clean_countReg               text449      336
+_Control                      text437      0C5
+_Cycle_CCPR                   bssBANK0     022
+_DIVS                         (abs)        4FF
+_Delay_xms                    text440      275
+_EEADR                        (abs)        09B
+_EECON1                       (abs)        09C
+_EECON2                       (abs)        09D
+_EEDAT                        (abs)        09A
+_EEDATA                       (abs)        09A
+_EEPGD                        (abs)        C67
+_GIE                          (abs)        05F
+_GO_DONE                      (abs)        0F9
+_GPIO_Init                    text446      1BB
+_GetCCP1Value                 text451      2B8
+_ISR                          text448      21E
+_LED_Study_End                text439      1ED
+_OPTION                       (abs)        081
+_OSCCON                       (abs)        08F
+_PA5                          (abs)        02D
+_PC0                          (abs)        038
+_PC1                          (abs)        039
+_PC3                          (abs)        03B
+_PC4                          (abs)        03C
+_PEIE                         (abs)        05E
+_PR2                          (abs)        092
+_PSTRCON                      (abs)        19D
+_PULSR                        (abs)        CF2
+_PULSS                        (abs)        CF3
+_RD                           (abs)        4E0
+_Read_EEPROM_u8               text441      2F0
+_SR0                          (abs)        CF6
+_SR1                          (abs)        CF7
+_SRCON                        (abs)        19E
+_STRA                         (abs)        CE8
+_STRB                         (abs)        CE9
+_STRC                         (abs)        CEA
+_STRD                         (abs)        CEB
+_STRSYNC                      (abs)        CEC
+_StudyVS1838DATA              bssBANK0     024
+_System_init                  text447      324
+_T1CKPS0                      (abs)        084
+_T1CKPS1                      (abs)        085
+_T1OSCEN                      (abs)        083
+_T2CKPS0                      (abs)        090
+_T2CKPS1                      (abs)        091
+_TMR1CS                       (abs)        081
+_TMR1H                        (abs)        00F
+_TMR1L                        (abs)        00E
+_TMR1ON                       (abs)        080
+_TMR2                         (abs)        011
+_TMR2IE                       (abs)        461
+_TMR2IF                       (abs)        061
+_TMR2ON                       (abs)        092
+_TOUTPS0                      (abs)        093
+_TOUTPS1                      (abs)        094
+_TOUTPS2                      (abs)        095
+_TOUTPS3                      (abs)        096
+_TRISA0                       (abs)        428
+_TRISA1                       (abs)        429
+_TRISA2                       (abs)        42A
+_TRISA3                       (abs)        42B
+_TRISA4                       (abs)        42C
+_TRISA5                       (abs)        42D
+_TRISA6                       (abs)        42E
+_TRISA7                       (abs)        42F
+_TRISC0                       (abs)        438
+_TRISC1                       (abs)        439
+_TRISC2                       (abs)        43A
+_TRISC3                       (abs)        43B
+_TRISC4                       (abs)        43C
+_TRISC5                       (abs)        43D
+_Timer1_Init                  text445      2D7
+_VCFG0                        (abs)        0FD
+_VS1838ReceiveHandle          text450      011
+_VS1838_Data                  bssBANK0     025
+_VS1838_Process               text444      14F
+_VS1838_Receive_Count         bssBANK0     026
+_VS1838_Status                bssBANK0     027
+_VS1838_receive_ok            bssBANK0     028
+_VS838_Receive_Data           bssCOMMON    07A
+_WDTCON                       (abs)        018
+_WPDA4                        (abs)        44C
+_WPDC1                        (abs)        44B
+_WPDC2                        (abs)        44A
+_WPDC3                        (abs)        449
+_WPUA0                        (abs)        4A8
+_WPUA1                        (abs)        4A9
+_WPUA2                        (abs)        4AA
+_WPUA3                        (abs)        4AB
+_WPUA4                        (abs)        4AC
+_WPUA5                        (abs)        4AD
+_WPUA6                        (abs)        4AE
+_WPUA7                        (abs)        4AF
+_WPUC0                        (abs)        440
+_WPUC1                        (abs)        441
+_WPUC2                        (abs)        442
+_WPUC3                        (abs)        443
+_WPUC4                        (abs)        444
+_WPUC5                        (abs)        445
+_WR                           (abs)        4E8
+_WREN                         (abs)        C62
+_WREN1                        (abs)        4E2
+_WREN2                        (abs)        4E4
+_WREN3                        (abs)        4E5
+_Write_EEPROM_u8              text438      24D
+__Habs1                       abs1         000
+__Hbank0                      bank0        000
+__Hbank1                      bank1        000
+__Hbank2                      bank2        000
+__HbssBANK0                   bssBANK0     000
+__HbssCOMMON                  bssCOMMON    000
+__Hcinit                      cinit        000
+__Hclrtext                    clrtext      000
+__Hcode                       code         000
+__Hcommon                     common       000
+__Hconfig                     config       000
+__HcstackBANK0                cstackBANK0  000
+__HcstackCOMMON               cstackCOMMON 000
+__Heeprom_data                eeprom_data  000
+__Hend_init                   end_init     011
+__Hfunctab                    functab      000
+__Hidloc                      idloc        000
+__Hinit                       init         010
+__Hintentry                   intentry     010
+__Hmaintext                   maintext     000
+__Hpowerup                    powerup      000
+__Hram                        ram          000
+__Hreset_vec                  reset_vec    001
+__Hsfr0                       sfr0         000
+__Hsfr1                       sfr1         000
+__Hsfr2                       sfr2         000
+__Hstrings                    strings      000
+__Htext                       text         000
+__Labs1                       abs1         000
+__Lbank0                      bank0        000
+__Lbank1                      bank1        000
+__Lbank2                      bank2        000
+__LbssBANK0                   bssBANK0     000
+__LbssCOMMON                  bssCOMMON    000
+__Lcinit                      cinit        000
+__Lclrtext                    clrtext      000
+__Lcode                       code         000
+__Lcommon                     common       000
+__Lconfig                     config       000
+__LcstackBANK0                cstackBANK0  000
+__LcstackCOMMON               cstackCOMMON 000
+__Leeprom_data                eeprom_data  000
+__Lend_init                   end_init     010
+__Lfunctab                    functab      000
+__Lidloc                      idloc        000
+__Linit                       init         010
+__Lintentry                   intentry     004
+__Lmaintext                   maintext     000
+__Lpowerup                    powerup      000
+__Lram                        ram          000
+__Lreset_vec                  reset_vec    000
+__Lsfr0                       sfr0         000
+__Lsfr1                       sfr1         000
+__Lsfr2                       sfr2         000
+__Lstrings                    strings      000
+__Ltext                       text         000
+__S0                          (abs)        33B
+__S1                          (abs)        07E
+__S2                          (abs)        000
+__end_of_Clean_countReg       text449      33B
+__end_of_Control              text437      14F
+__end_of_Delay_xms            text440      298
+__end_of_GPIO_Init            text446      1ED
+__end_of_GetCCP1Value         text451      2D7
+__end_of_ISR                  text448      24D
+__end_of_LED_Study_End        text439      21E
+__end_of_Read_EEPROM_u8       text441      305
+__end_of_System_init          text447      32E
+__end_of_Timer1_Init          text445      2F0
+__end_of_VS1838ReceiveHandle  text450      0C5
+__end_of_VS1838_Process       text444      1BB
+__end_of_Write_EEPROM_u8      text438      275
+__end_of_isKeyPressed         text443      324
+__end_of_isSwitchOn           text442      31A
+__end_of_main                 maintext     2B8
+__pbssBANK0                   bssBANK0     020
+__pbssCOMMON                  bssCOMMON    07A
+__pcstackBANK0                cstackBANK0  02B
+__pcstackCOMMON               cstackCOMMON 070
+__pintentry                   intentry     004
+__pmaintext                   maintext     298
+__ptext436                    text436      000
+__ptext437                    text437      0C5
+__ptext438                    text438      24D
+__ptext439                    text439      1ED
+__ptext440                    text440      275
+__ptext441                    text441      2F0
+__ptext442                    text442      310
+__ptext443                    text443      31A
+__ptext444                    text444      14F
+__ptext445                    text445      2D7
+__ptext446                    text446      1BB
+__ptext447                    text447      324
+__ptext448                    text448      21E
+__ptext449                    text449      336
+__ptext450                    text450      011
+__ptext451                    text451      2B8
+__ptext452                    text452      000
+__size_of_Clean_countReg      (abs)        000
+__size_of_Control             (abs)        000
+__size_of_Delay_xms           (abs)        000
+__size_of_GPIO_Init           (abs)        000
+__size_of_GetCCP1Value        (abs)        000
+__size_of_ISR                 (abs)        000
+__size_of_LED_Study_End       (abs)        000
+__size_of_Read_EEPROM_u8      (abs)        000
+__size_of_System_init         (abs)        000
+__size_of_Timer1_Init         (abs)        000
+__size_of_VS1838ReceiveHandle (abs)        000
+__size_of_VS1838_Process      (abs)        000
+__size_of_Write_EEPROM_u8     (abs)        000
+__size_of_isKeyPressed        (abs)        000
+__size_of_isSwitchOn          (abs)        000
+__size_of_main                (abs)        000
+_exit                         init         010
+_flag_led_put                 bssBANK0     029
+_isKeyPressed                 text443      31A
+_isSwitchOn                   text442      310
+_main                         maintext     298
+_vs_times                     bssBANK0     02A
+btemp                         (abs)        07E
+clear_ram                     clrtext      32E
+end_of_initialization         cinit        30E
+interrupt_function            intentry     004
+intlevel0                     functab      000
+intlevel1                     functab      000
+intlevel2                     functab      000
+intlevel3                     functab      000
+intlevel4                     functab      000
+intlevel5                     functab      000
+reset_vec                     reset_vec    000
+saved_w                       (abs)        07E
+start                         init         010
+start_initialization          cinit        305
+wtemp0                        (abs)        07E

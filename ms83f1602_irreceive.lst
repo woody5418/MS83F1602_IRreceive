@@ -1,0 +1,3387 @@
+
+
+HI-TECH Software PIC LITE Macro Assembler V9.83 build 10920 
+                                                                                               Tue May 07 09:50:18 2019
+
+HI-TECH Software Omniscient Code Generator (Lite mode) build 10920
+     1  0000                     opt subtitle "HI-TECH Software Omniscient Code Generator (Lite mode) build 10920"
+     2                           
+     3                           opt pagewidth 120
+     4                           
+     5                           	opt lm
+     6                           
+     7                           	processor	16F685
+     8                           clrc	macro
+     9                           	bcf	3,0
+    10  0000                     	endm
+    11                           clrz	macro
+    12                           	bcf	3,2
+    13  0000                     	endm
+    14                           setc	macro
+    15                           	bsf	3,0
+    16  0000                     	endm
+    17                           setz	macro
+    18                           	bsf	3,2
+    19  0000                     	endm
+    20                           skipc	macro
+    21                           	btfss	3,0
+    22  0000                     	endm
+    23                           skipz	macro
+    24                           	btfss	3,2
+    25  0000                     	endm
+    26                           skipnc	macro
+    27                           	btfsc	3,0
+    28  0000                     	endm
+    29                           skipnz	macro
+    30                           	btfsc	3,2
+    31  0000                     	endm
+    32  0000                     indf	equ	0
+    33  0000                     indf0	equ	0
+    34  0002                     pc	equ	2
+    35  0002                     pcl	equ	2
+    36  0003                     status	equ	3
+    37  0004                     fsr	equ	4
+    38  0004                     fsr0	equ	4
+    39  0001                     c	equ	1
+    40  0000                     z	equ	0
+    41  000A                     pclath	equ	10
+    42                           	FNCALL	_main,_System_init
+    43                           	FNCALL	_main,_GPIO_Init
+    44                           	FNCALL	_main,_Timer1_Init
+    45                           	FNCALL	_main,_LED_Study_End
+    46                           	FNCALL	_main,_Read_EEPROM_u8
+    47                           	FNCALL	_main,_Control
+    48                           	FNCALL	_Control,_isKeyPressed
+    49                           	FNCALL	_Control,_Delay_xms
+    50                           	FNCALL	_Control,_VS1838_Process
+    51                           	FNCALL	_Control,_Write_EEPROM_u8
+    52                           	FNCALL	_Control,_isSwitchOn
+    53                           	FNCALL	_Write_EEPROM_u8,_Delay_xms
+    54                           	FNCALL	_LED_Study_End,_Delay_xms
+    55                           	FNROOT	_main
+    56                           	FNCALL	_ISR,_GetCCP1Value
+    57                           	FNCALL	_ISR,_VS1838ReceiveHandle
+    58                           	FNCALL	_ISR,_Clean_countReg
+    59                           	FNCALL	intlevel1,_ISR
+    60                           	global	intlevel1
+    61                           	FNROOT	intlevel1
+    62                           	global	_ADCIN4
+    63                           	global	_Cycle_CCPR
+    64                           	global	_StudyVS1838DATA
+    65                           	global	_VS1838_Data
+    66                           	global	_VS1838_Receive_Count
+    67                           	global	_VS1838_Status
+    68                           	global	_VS1838_receive_ok
+    69                           	global	_flag_led_put
+    70                           	global	_vs_times
+    71                           	global	_VS838_Receive_Data
+    72                           	global	_PSTRCON
+    73                           psect	text436,local,class=CODE,delta=2
+    74                           global __ptext436
+    75  0000                     __ptext436:
+    76  019D                     _PSTRCON	set	413
+    77                           	DABS	1,413,1	;_PSTRCON
+    78                           
+    79                           	global	_SRCON
+    80  019E                     _SRCON	set	414
+    81                           	DABS	1,414,1	;_SRCON
+    82                           
+    83                           	global	_C1SEN
+    84  0CF5                     _C1SEN	set	3317
+    85                           	DABS	1,414,1	;_C1SEN
+    86                           
+    87                           	global	_C2REN
+    88  0CF4                     _C2REN	set	3316
+    89                           	DABS	1,414,1	;_C2REN
+    90                           
+    91                           	global	_EEPGD
+    92  0C67                     _EEPGD	set	3175
+    93                           	DABS	1,396,1	;_EEPGD
+    94                           
+    95                           	global	_PULSR
+    96  0CF2                     _PULSR	set	3314
+    97                           	DABS	1,414,1	;_PULSR
+    98                           
+    99                           	global	_PULSS
+   100  0CF3                     _PULSS	set	3315
+   101                           	DABS	1,414,1	;_PULSS
+   102                           
+   103                           	global	_SR0
+   104  0CF6                     _SR0	set	3318
+   105                           	DABS	1,414,1	;_SR0
+   106                           
+   107                           	global	_SR1
+   108  0CF7                     _SR1	set	3319
+   109                           	DABS	1,414,1	;_SR1
+   110                           
+   111                           	global	_STRA
+   112  0CE8                     _STRA	set	3304
+   113                           	DABS	1,413,1	;_STRA
+   114                           
+   115                           	global	_STRB
+   116  0CE9                     _STRB	set	3305
+   117                           	DABS	1,413,1	;_STRB
+   118                           
+   119                           	global	_STRC
+   120  0CEA                     _STRC	set	3306
+   121                           	DABS	1,413,1	;_STRC
+   122                           
+   123                           	global	_STRD
+   124  0CEB                     _STRD	set	3307
+   125                           	DABS	1,413,1	;_STRD
+   126                           
+   127                           	global	_STRSYNC
+   128  0CEC                     _STRSYNC	set	3308
+   129                           	DABS	1,413,1	;_STRSYNC
+   130                           
+   131                           	global	_WREN
+   132  0C62                     _WREN	set	3170
+   133                           	DABS	1,396,1	;_WREN
+   134                           
+   135                           	global	_ADCON0
+   136  001F                     _ADCON0	set	31
+   137                           	global	_ADRESH
+   138  001E                     _ADRESH	set	30
+   139                           	global	_CCP1CON
+   140  0015                     _CCP1CON	set	21
+   141                           	global	_CCPR1H
+   142  0014                     _CCPR1H	set	20
+   143                           	global	_CCPR1L
+   144  0013                     _CCPR1L	set	19
+   145                           	global	_TMR1H
+   146  000F                     _TMR1H	set	15
+   147                           	global	_TMR1L
+   148  000E                     _TMR1L	set	14
+   149                           	global	_TMR2
+   150  0011                     _TMR2	set	17
+   151                           	global	_WDTCON
+   152  0018                     _WDTCON	set	24
+   153                           	global	_ADFM
+   154  00FF                     _ADFM	set	255
+   155                           	global	_ADON
+   156  00F8                     _ADON	set	248
+   157                           	global	_CARRY
+   158  0018                     _CARRY	set	24
+   159                           	global	_CCP1IF
+   160  0068                     _CCP1IF	set	104
+   161                           	global	_CHS0
+   162  00FA                     _CHS0	set	250
+   163                           	global	_CHS1
+   164  00FB                     _CHS1	set	251
+   165                           	global	_CHS2
+   166  00FC                     _CHS2	set	252
+   167                           	global	_CM0
+   168  00C8                     _CM0	set	200
+   169                           	global	_CM1
+   170  00C9                     _CM1	set	201
+   171                           	global	_CM2
+   172  00CA                     _CM2	set	202
+   173                           	global	_GIE
+   174  005F                     _GIE	set	95
+   175                           	global	_GO_DONE
+   176  00F9                     _GO_DONE	set	249
+   177                           	global	_PA5
+   178  002D                     _PA5	set	45
+   179                           	global	_PC0
+   180  0038                     _PC0	set	56
+   181                           	global	_PC1
+   182  0039                     _PC1	set	57
+   183                           	global	_PC3
+   184  003B                     _PC3	set	59
+   185                           	global	_PC4
+   186  003C                     _PC4	set	60
+   187                           	global	_PEIE
+   188  005E                     _PEIE	set	94
+   189                           	global	_T1CKPS0
+   190  0084                     _T1CKPS0	set	132
+   191                           	global	_T1CKPS1
+   192  0085                     _T1CKPS1	set	133
+   193                           	global	_T1OSCEN
+   194  0083                     _T1OSCEN	set	131
+   195                           	global	_T2CKPS0
+   196  0090                     _T2CKPS0	set	144
+   197                           	global	_T2CKPS1
+   198  0091                     _T2CKPS1	set	145
+   199                           	global	_TMR1CS
+   200  0081                     _TMR1CS	set	129
+   201                           	global	_TMR1ON
+   202  0080                     _TMR1ON	set	128
+   203                           	global	_TMR2IF
+   204  0061                     _TMR2IF	set	97
+   205                           	global	_TMR2ON
+   206  0092                     _TMR2ON	set	146
+   207                           	global	_TOUTPS0
+   208  0093                     _TOUTPS0	set	147
+   209                           	global	_TOUTPS1
+   210  0094                     _TOUTPS1	set	148
+   211                           	global	_TOUTPS2
+   212  0095                     _TOUTPS2	set	149
+   213                           	global	_TOUTPS3
+   214  0096                     _TOUTPS3	set	150
+   215                           	global	_VCFG0
+   216  00FD                     _VCFG0	set	253
+   217                           	global	_ADRESL
+   218  009E                     _ADRESL	set	158
+   219                           	global	_EEADR
+   220  009B                     _EEADR	set	155
+   221                           	global	_EECON1
+   222  009C                     _EECON1	set	156
+   223                           	global	_EECON2
+   224  009D                     _EECON2	set	157
+   225                           	global	_EEDAT
+   226  009A                     _EEDAT	set	154
+   227                           	global	_EEDATA
+   228  009A                     _EEDATA	set	154
+   229                           	global	_OPTION
+   230  0081                     _OPTION	set	129
+   231                           	global	_OSCCON
+   232  008F                     _OSCCON	set	143
+   233                           	global	_PR2
+   234  0092                     _PR2	set	146
+   235                           	global	_ADCS0
+   236  04FC                     _ADCS0	set	1276
+   237                           	global	_ADCS1
+   238  04FD                     _ADCS1	set	1277
+   239                           	global	_ADCS2
+   240  04FE                     _ADCS2	set	1278
+   241                           	global	_ANSEL0
+   242  0488                     _ANSEL0	set	1160
+   243                           	global	_ANSEL1
+   244  0489                     _ANSEL1	set	1161
+   245                           	global	_ANSEL2
+   246  048A                     _ANSEL2	set	1162
+   247                           	global	_ANSEL3
+   248  048B                     _ANSEL3	set	1163
+   249                           	global	_ANSEL4
+   250  048C                     _ANSEL4	set	1164
+   251                           	global	_ANSEL5
+   252  048D                     _ANSEL5	set	1165
+   253                           	global	_ANSEL6
+   254  048E                     _ANSEL6	set	1166
+   255                           	global	_ANSEL7
+   256  048F                     _ANSEL7	set	1167
+   257                           	global	_CCP1IE
+   258  0468                     _CCP1IE	set	1128
+   259                           	global	_DIVS
+   260  04FF                     _DIVS	set	1279
+   261                           	global	_RD
+   262  04E0                     _RD	set	1248
+   263                           	global	_TMR2IE
+   264  0461                     _TMR2IE	set	1121
+   265                           	global	_TRISA0
+   266  0428                     _TRISA0	set	1064
+   267                           	global	_TRISA1
+   268  0429                     _TRISA1	set	1065
+   269                           	global	_TRISA2
+   270  042A                     _TRISA2	set	1066
+   271                           	global	_TRISA3
+   272  042B                     _TRISA3	set	1067
+   273                           	global	_TRISA4
+   274  042C                     _TRISA4	set	1068
+   275                           	global	_TRISA5
+   276  042D                     _TRISA5	set	1069
+   277                           	global	_TRISA6
+   278  042E                     _TRISA6	set	1070
+   279                           	global	_TRISA7
+   280  042F                     _TRISA7	set	1071
+   281                           	global	_TRISC0
+   282  0438                     _TRISC0	set	1080
+   283                           	global	_TRISC1
+   284  0439                     _TRISC1	set	1081
+   285                           	global	_TRISC2
+   286  043A                     _TRISC2	set	1082
+   287                           	global	_TRISC3
+   288  043B                     _TRISC3	set	1083
+   289                           	global	_TRISC4
+   290  043C                     _TRISC4	set	1084
+   291                           	global	_TRISC5
+   292  043D                     _TRISC5	set	1085
+   293                           	global	_WPDA4
+   294  044C                     _WPDA4	set	1100
+   295                           	global	_WPDC1
+   296  044B                     _WPDC1	set	1099
+   297                           	global	_WPDC2
+   298  044A                     _WPDC2	set	1098
+   299                           	global	_WPDC3
+   300  0449                     _WPDC3	set	1097
+   301                           	global	_WPUA0
+   302  04A8                     _WPUA0	set	1192
+   303                           	global	_WPUA1
+   304  04A9                     _WPUA1	set	1193
+   305                           	global	_WPUA2
+   306  04AA                     _WPUA2	set	1194
+   307                           	global	_WPUA3
+   308  04AB                     _WPUA3	set	1195
+   309                           	global	_WPUA4
+   310  04AC                     _WPUA4	set	1196
+   311                           	global	_WPUA5
+   312  04AD                     _WPUA5	set	1197
+   313                           	global	_WPUA6
+   314  04AE                     _WPUA6	set	1198
+   315                           	global	_WPUA7
+   316  04AF                     _WPUA7	set	1199
+   317                           	global	_WPUC0
+   318  0440                     _WPUC0	set	1088
+   319                           	global	_WPUC1
+   320  0441                     _WPUC1	set	1089
+   321                           	global	_WPUC2
+   322  0442                     _WPUC2	set	1090
+   323                           	global	_WPUC3
+   324  0443                     _WPUC3	set	1091
+   325                           	global	_WPUC4
+   326  0444                     _WPUC4	set	1092
+   327                           	global	_WPUC5
+   328  0445                     _WPUC5	set	1093
+   329                           	global	_WR
+   330  04E8                     _WR	set	1256
+   331                           	global	_WREN1
+   332  04E2                     _WREN1	set	1250
+   333                           	global	_WREN2
+   334  04E4                     _WREN2	set	1252
+   335                           	global	_WREN3
+   336  04E5                     _WREN3	set	1253
+   337                           	file	"ms83f1602_irreceive.as"
+   338                           	line	#
+   339                           psect cinit,class=CODE,delta=2
+   340                           global start_initialization
+   341  0305                     start_initialization:
+   342                           
+   343                           psect	bssCOMMON,class=COMMON,space=1
+   344                           global __pbssCOMMON
+   345  007A                     __pbssCOMMON:
+   346  007A                     _VS838_Receive_Data:
+   347  007A                            ds      4
+   348                           
+   349                           psect	bssBANK0,class=BANK0,space=1
+   350                           global __pbssBANK0
+   351  0020                     __pbssBANK0:
+   352  0020                     _ADCIN4:
+   353  0020                            ds      2
+   354                           
+   355  0022                     _Cycle_CCPR:
+   356  0022                            ds      2
+   357                           
+   358  0024                     _StudyVS1838DATA:
+   359  0024                            ds      1
+   360                           
+   361  0025                     _VS1838_Data:
+   362  0025                            ds      1
+   363                           
+   364  0026                     _VS1838_Receive_Count:
+   365  0026                            ds      1
+   366                           
+   367  0027                     _VS1838_Status:
+   368  0027                            ds      1
+   369                           
+   370  0028                     _VS1838_receive_ok:
+   371  0028                            ds      1
+   372                           
+   373  0029                     _flag_led_put:
+   374  0029                            ds      1
+   375                           
+   376  002A                     _vs_times:
+   377  002A                            ds      1
+   378                           
+   379                           psect clrtext,class=CODE,delta=2
+   380                           global clear_ram
+   381                           ;	Called with FSR containing the base address, and
+   382                           ;	W with the last address+1
+   383  032E                     clear_ram:
+   384  032E  0064               	clrwdt			;clear the watchdog before getting into this loop
+   385  032F                     clrloop:
+   386  032F  0180               	clrf	indf		;clear RAM location pointed to by FSR
+   387  0330  0A84               	incf	fsr,f		;increment pointer
+   388  0331  0604               	xorwf	fsr,w		;XOR with final address
+   389  0332  1903               	btfsc	status,2	;have we reached the end yet?
+   390  0333  3400               	retlw	0		;all done for this memory range, return
+   391  0334  0604               	xorwf	fsr,w		;XOR again to restore value
+   392  0335  2B2F               	goto	clrloop		;do the next byte
+   393                           
+   394                           ; Clear objects allocated to COMMON
+   395                           psect cinit,class=CODE,delta=2
+   396  0305  307A               	movlw	low(__pbssCOMMON)
+   397  0306  0084               	movwf	fsr
+   398  0307  307E               	movlw	low((__pbssCOMMON)+04h)
+   399  0308  232E               	fcall	clear_ram
+   400                           ; Clear objects allocated to BANK0
+   401                           psect cinit,class=CODE,delta=2
+   402  0309  1383               	bcf	status, 7	;select IRP bank0
+   403  030A  3020               	movlw	low(__pbssBANK0)
+   404  030B  0084               	movwf	fsr
+   405  030C  302B               	movlw	low((__pbssBANK0)+0Bh)
+   406  030D  232E               	fcall	clear_ram
+   407                           psect cinit,class=CODE,delta=2
+   408                           global end_of_initialization
+   409                           
+   410                           ;End of C runtime variable initialization code
+   411                           
+   412  030E                     end_of_initialization:
+   413  030E  0183               clrf status
+   414  030F  2A98               ljmp _main	;jump to C main() function
+   415                           psect	cstackCOMMON,class=COMMON,space=1
+   416                           global __pcstackCOMMON
+   417  0070                     __pcstackCOMMON:
+   418                           	global	?_System_init
+   419  0070                     ?_System_init:	; 0 bytes @ 0x0
+   420                           	global	?_GPIO_Init
+   421  0070                     ?_GPIO_Init:	; 0 bytes @ 0x0
+   422                           	global	?_Timer1_Init
+   423  0070                     ?_Timer1_Init:	; 0 bytes @ 0x0
+   424                           	global	?_LED_Study_End
+   425  0070                     ?_LED_Study_End:	; 0 bytes @ 0x0
+   426                           	global	?_Control
+   427  0070                     ?_Control:	; 0 bytes @ 0x0
+   428                           	global	?_VS1838ReceiveHandle
+   429  0070                     ?_VS1838ReceiveHandle:	; 0 bytes @ 0x0
+   430                           	global	?_Clean_countReg
+   431  0070                     ?_Clean_countReg:	; 0 bytes @ 0x0
+   432                           	global	??_Clean_countReg
+   433  0070                     ??_Clean_countReg:	; 0 bytes @ 0x0
+   434                           	global	?_main
+   435  0070                     ?_main:	; 0 bytes @ 0x0
+   436                           	global	?_ISR
+   437  0070                     ?_ISR:	; 0 bytes @ 0x0
+   438                           	global	?_Read_EEPROM_u8
+   439  0070                     ?_Read_EEPROM_u8:	; 1 bytes @ 0x0
+   440                           	global	?_isKeyPressed
+   441  0070                     ?_isKeyPressed:	; 1 bytes @ 0x0
+   442                           	global	?_isSwitchOn
+   443  0070                     ?_isSwitchOn:	; 1 bytes @ 0x0
+   444                           	global	?_VS1838_Process
+   445  0070                     ?_VS1838_Process:	; 1 bytes @ 0x0
+   446                           	global	?_GetCCP1Value
+   447  0070                     ?_GetCCP1Value:	; 2 bytes @ 0x0
+   448                           	global	VS1838ReceiveHandle@capdata
+   449  0070                     VS1838ReceiveHandle@capdata:	; 2 bytes @ 0x0
+   450  0070                     	ds	2
+   451                           	global	??_GetCCP1Value
+   452  0072                     ??_GetCCP1Value:	; 0 bytes @ 0x2
+   453                           	global	??_VS1838ReceiveHandle
+   454  0072                     ??_VS1838ReceiveHandle:	; 0 bytes @ 0x2
+   455  0072                     	ds	2
+   456                           	global	GetCCP1Value@values
+   457  0074                     GetCCP1Value@values:	; 2 bytes @ 0x4
+   458  0074                     	ds	2
+   459                           	global	??_ISR
+   460  0076                     ??_ISR:	; 0 bytes @ 0x6
+   461  0076                     	ds	4
+   462                           psect	cstackBANK0,class=BANK0,space=1
+   463                           global __pcstackBANK0
+   464  002B                     __pcstackBANK0:
+   465                           	global	??_System_init
+   466  002B                     ??_System_init:	; 0 bytes @ 0x0
+   467                           	global	??_GPIO_Init
+   468  002B                     ??_GPIO_Init:	; 0 bytes @ 0x0
+   469                           	global	??_Timer1_Init
+   470  002B                     ??_Timer1_Init:	; 0 bytes @ 0x0
+   471                           	global	??_Read_EEPROM_u8
+   472  002B                     ??_Read_EEPROM_u8:	; 0 bytes @ 0x0
+   473                           	global	?_Delay_xms
+   474  002B                     ?_Delay_xms:	; 0 bytes @ 0x0
+   475                           	global	??_isKeyPressed
+   476  002B                     ??_isKeyPressed:	; 0 bytes @ 0x0
+   477                           	global	??_isSwitchOn
+   478  002B                     ??_isSwitchOn:	; 0 bytes @ 0x0
+   479                           	global	??_VS1838_Process
+   480  002B                     ??_VS1838_Process:	; 0 bytes @ 0x0
+   481                           	global	Delay_xms@x
+   482  002B                     Delay_xms@x:	; 2 bytes @ 0x0
+   483  002B                     	ds	1
+   484                           	global	Read_EEPROM_u8@EEAddress
+   485  002C                     Read_EEPROM_u8@EEAddress:	; 1 bytes @ 0x1
+   486  002C                     	ds	1
+   487                           	global	??_Delay_xms
+   488  002D                     ??_Delay_xms:	; 0 bytes @ 0x2
+   489                           	global	Read_EEPROM_u8@EepromData
+   490  002D                     Read_EEPROM_u8@EepromData:	; 1 bytes @ 0x2
+   491  002D                     	ds	2
+   492                           	global	Delay_xms@i
+   493  002F                     Delay_xms@i:	; 2 bytes @ 0x4
+   494  002F                     	ds	1
+   495                           	global	VS1838_Process@Address_H
+   496  0030                     VS1838_Process@Address_H:	; 1 bytes @ 0x5
+   497  0030                     	ds	1
+   498                           	global	??_LED_Study_End
+   499  0031                     ??_LED_Study_End:	; 0 bytes @ 0x6
+   500                           	global	?_Write_EEPROM_u8
+   501  0031                     ?_Write_EEPROM_u8:	; 0 bytes @ 0x6
+   502                           	global	VS1838_Process@Address_L
+   503  0031                     VS1838_Process@Address_L:	; 1 bytes @ 0x6
+   504                           	global	Write_EEPROM_u8@EEDatas
+   505  0031                     Write_EEPROM_u8@EEDatas:	; 1 bytes @ 0x6
+   506  0031                     	ds	1
+   507                           	global	??_Write_EEPROM_u8
+   508  0032                     ??_Write_EEPROM_u8:	; 0 bytes @ 0x7
+   509                           	global	VS1838_Process@Data_L
+   510  0032                     VS1838_Process@Data_L:	; 1 bytes @ 0x7
+   511                           	global	Write_EEPROM_u8@EEAddress
+   512  0032                     Write_EEPROM_u8@EEAddress:	; 1 bytes @ 0x7
+   513  0032                     	ds	1
+   514                           	global	VS1838_Process@Data_H
+   515  0033                     VS1838_Process@Data_H:	; 1 bytes @ 0x8
+   516  0033                     	ds	1
+   517                           	global	??_Control
+   518  0034                     ??_Control:	; 0 bytes @ 0x9
+   519  0034                     	ds	1
+   520                           	global	??_main
+   521  0035                     ??_main:	; 0 bytes @ 0xA
+   522  0035                     	ds	1
+   523 ;;Data sizes: Strings 0, constant 0, data 0, bss 15, persistent 0 stack 0
+   524 ;;Auto spaces:   Size  Autos    Used
+   525 ;; COMMON          14     10      14
+   526 ;; BANK0           80     11      22
+   527 ;; BANK1           32      0       0
+   528                           
+   529 ;;
+   530 ;; Pointer list with targets:
+   531                           
+   532 ;; ?_GetCCP1Value	unsigned int  size(1) Largest target is 0
+   533 ;;
+   534                           
+   535                           
+   536 ;;
+   537 ;; Critical Paths under _main in COMMON
+   538 ;;
+   539 ;;   None.
+   540 ;;
+   541 ;; Critical Paths under _ISR in COMMON
+   542 ;;
+   543 ;;   _ISR->_GetCCP1Value
+   544 ;;   _ISR->_VS1838ReceiveHandle
+   545 ;;
+   546 ;; Critical Paths under _main in BANK0
+   547 ;;
+   548 ;;   _main->_Control
+   549 ;;   _Control->_VS1838_Process
+   550 ;;   _Write_EEPROM_u8->_Delay_xms
+   551 ;;   _LED_Study_End->_Delay_xms
+   552 ;;
+   553 ;; Critical Paths under _ISR in BANK0
+   554 ;;
+   555 ;;   None.
+   556 ;;
+   557 ;; Critical Paths under _main in BANK1
+   558 ;;
+   559 ;;   None.
+   560 ;;
+   561 ;; Critical Paths under _ISR in BANK1
+   562 ;;
+   563 ;;   None.
+   564                           
+   565 ;;
+   566 ;;Main: autosize = 0, tempsize = 1, incstack = 0, save=0
+   567 ;;
+   568                           
+   569 ;;
+   570 ;;Call Graph Tables:
+   571 ;;
+   572 ;; ---------------------------------------------------------------------------------
+   573 ;; (Depth) Function   	        Calls       Base Space   Used Autos Params    Refs
+   574 ;; ---------------------------------------------------------------------------------
+   575 ;; (0) _main                                                 1     1      0     342
+   576 ;;                                             10 BANK0      1     1      0
+   577 ;;                        _System_init
+   578 ;;                          _GPIO_Init
+   579 ;;                        _Timer1_Init
+   580 ;;                      _LED_Study_End
+   581 ;;                     _Read_EEPROM_u8
+   582 ;;                            _Control
+   583 ;; ---------------------------------------------------------------------------------
+   584 ;; (1) _Control                                              1     1      0     250
+   585 ;;                                              9 BANK0      1     1      0
+   586 ;;                       _isKeyPressed
+   587 ;;                          _Delay_xms
+   588 ;;                     _VS1838_Process
+   589 ;;                    _Write_EEPROM_u8
+   590 ;;                         _isSwitchOn
+   591 ;; ---------------------------------------------------------------------------------
+   592 ;; (2) _Write_EEPROM_u8                                      2     1      1      90
+   593 ;;                                              6 BANK0      2     1      1
+   594 ;;                          _Delay_xms
+   595 ;; ---------------------------------------------------------------------------------
+   596 ;; (1) _LED_Study_End                                        0     0      0      46
+   597 ;;                          _Delay_xms
+   598 ;; ---------------------------------------------------------------------------------
+   599 ;; (3) _Delay_xms                                            6     4      2      46
+   600 ;;                                              0 BANK0      6     4      2
+   601 ;; ---------------------------------------------------------------------------------
+   602 ;; (1) _Read_EEPROM_u8                                       3     3      0      46
+   603 ;;                                              0 BANK0      3     3      0
+   604 ;; ---------------------------------------------------------------------------------
+   605 ;; (2) _isSwitchOn                                           0     0      0       0
+   606 ;; ---------------------------------------------------------------------------------
+   607 ;; (2) _isKeyPressed                                         0     0      0       0
+   608 ;; ---------------------------------------------------------------------------------
+   609 ;; (2) _VS1838_Process                                       9     9      0     114
+   610 ;;                                              0 BANK0      9     9      0
+   611 ;; ---------------------------------------------------------------------------------
+   612 ;; (1) _Timer1_Init                                          0     0      0       0
+   613 ;; ---------------------------------------------------------------------------------
+   614 ;; (1) _GPIO_Init                                            0     0      0       0
+   615 ;; ---------------------------------------------------------------------------------
+   616 ;; (1) _System_init                                          0     0      0       0
+   617 ;; ---------------------------------------------------------------------------------
+   618 ;; Estimated maximum stack depth 3
+   619 ;; ---------------------------------------------------------------------------------
+   620 ;; (Depth) Function   	        Calls       Base Space   Used Autos Params    Refs
+   621 ;; ---------------------------------------------------------------------------------
+   622 ;; (4) _ISR                                                  4     4      0     202
+   623 ;;                                              6 COMMON     4     4      0
+   624 ;;                       _GetCCP1Value
+   625 ;;                _VS1838ReceiveHandle
+   626 ;;                     _Clean_countReg
+   627 ;; ---------------------------------------------------------------------------------
+   628 ;; (5) _Clean_countReg                                       0     0      0       0
+   629 ;; ---------------------------------------------------------------------------------
+   630 ;; (5) _VS1838ReceiveHandle                                  6     4      2     132
+   631 ;;                                              0 COMMON     6     4      2
+   632 ;; ---------------------------------------------------------------------------------
+   633 ;; (5) _GetCCP1Value                                         6     4      2      70
+   634 ;;                                              0 COMMON     6     4      2
+   635 ;; ---------------------------------------------------------------------------------
+   636 ;; Estimated maximum stack depth 5
+   637 ;; ---------------------------------------------------------------------------------
+   638                           
+   639 ;; Call Graph Graphs:
+   640                           
+   641 ;; _main (ROOT)
+   642 ;;   _System_init
+   643 ;;   _GPIO_Init
+   644 ;;   _Timer1_Init
+   645 ;;   _LED_Study_End
+   646 ;;     _Delay_xms
+   647 ;;   _Read_EEPROM_u8
+   648 ;;   _Control
+   649 ;;     _isKeyPressed
+   650 ;;     _Delay_xms
+   651 ;;     _VS1838_Process
+   652 ;;     _Write_EEPROM_u8
+   653 ;;       _Delay_xms
+   654 ;;     _isSwitchOn
+   655 ;;
+   656 ;; _ISR (ROOT)
+   657 ;;   _GetCCP1Value
+   658 ;;   _VS1838ReceiveHandle
+   659 ;;   _Clean_countReg
+   660 ;;
+   661                           
+   662 ;; Address spaces:
+   663                           
+   664 ;;Name               Size   Autos  Total    Cost      Usage
+   665 ;;BITCOMMON            E      0       0       0        0.0%
+   666 ;;EEDATA             100      0       0       0        0.0%
+   667 ;;NULL                 0      0       0       0        0.0%
+   668 ;;CODE                 0      0       0       0        0.0%
+   669 ;;COMMON               E      A       E       1      100.0%
+   670 ;;BITSFR0              0      0       0       1        0.0%
+   671 ;;SFR0                 0      0       0       1        0.0%
+   672 ;;BITSFR1              0      0       0       2        0.0%
+   673 ;;SFR1                 0      0       0       2        0.0%
+   674 ;;STACK                0      0       7       2        0.0%
+   675 ;;BITBANK0            50      0       0       3        0.0%
+   676 ;;BANK0               50      B      16       4       27.5%
+   677 ;;BITBANK1            20      0       0       5        0.0%
+   678 ;;BITSFR2              0      0       0       5        0.0%
+   679 ;;SFR2                 0      0       0       5        0.0%
+   680 ;;BANK1               20      0       0       6        0.0%
+   681 ;;ABS                  0      0      24       7        0.0%
+   682 ;;DATA                 0      0      2B       8        0.0%
+   683                           
+   684                           	global	_main
+   685                           psect	maintext,global,class=CODE,delta=2
+   686                           global __pmaintext
+   687  0298                     __pmaintext:
+   688                           
+   689 ;; *************** function _main *****************
+   690 ;; Defined at:
+   691 ;;		line 88 in file "main.c"
+   692 ;; Parameters:    Size  Location     Type
+   693 ;;		None
+   694 ;; Auto vars:     Size  Location     Type
+   695 ;;		None
+   696 ;; Return value:  Size  Location     Type
+   697 ;;		None               void
+   698 ;; Registers used:
+   699 ;;		wreg, status,2, status,0, pclath, cstack
+   700 ;; Tracked objects:
+   701 ;;		On entry : 17F/0
+   702 ;;		On exit  : 0/0
+   703 ;;		Unchanged: 0/0
+   704 ;; Data sizes:     COMMON   BANK0   BANK1
+   705 ;;      Params:         0       0       0
+   706 ;;      Locals:         0       0       0
+   707 ;;      Temps:          0       1       0
+   708 ;;      Totals:         0       1       0
+   709 ;;Total ram usage:        1 bytes
+   710 ;; Hardware stack levels required when called:    5
+   711 ;; This function calls:
+   712 ;;		_System_init
+   713 ;;		_GPIO_Init
+   714 ;;		_Timer1_Init
+   715 ;;		_LED_Study_End
+   716 ;;		_Read_EEPROM_u8
+   717 ;;		_Control
+   718 ;; This function is called by:
+   719 ;;		Startup code after reset
+   720 ;; This function uses a non-reentrant model
+   721 ;;
+   722                           psect	maintext
+   723                           	file	"main.c"
+   724                           	line	88
+   725                           	global	__size_of_main
+   726  0020                     	__size_of_main	equ	__end_of_main-_main
+   727                           	
+   728  0298                     _main:	
+   729                           	opt	stack 3
+   730                           ; Regs used in _main: [wreg+status,2+status,0+pclath+cstack]
+   731                           	line	89
+   732                           	
+   733  0298                     l3663:	
+   734                           # 89 "main.c"
+   735  0298  0064               clrwdt ;#
+   736                           psect	maintext
+   737                           	line	90
+   738                           	
+   739  0299                     l3665:	
+   740                           ;main.c: 90: System_init();
+   741  0299  2324               	fcall	_System_init
+   742                           	line	91
+   743                           	
+   744  029A                     l3667:	
+   745                           ;main.c: 91: GPIO_Init();
+   746  029A  21BB               	fcall	_GPIO_Init
+   747                           	line	92
+   748                           	
+   749  029B                     l3669:	
+   750                           ;main.c: 92: Timer1_Init();
+   751  029B  22D7               	fcall	_Timer1_Init
+   752                           	line	95
+   753                           	
+   754  029C                     l3671:	
+   755                           ;main.c: 95: PC4=0;
+   756  029C  1283               	bcf	status, 5	;RP0=0, select bank0
+   757  029D  1303               	bcf	status, 6	;RP1=0, select bank0
+   758  029E  1207               	bcf	(60/8),(60)&7
+   759                           	line	96
+   760                           	
+   761  029F                     l3673:	
+   762                           ;main.c: 96: LED_Study_End();
+   763  029F  21ED               	fcall	_LED_Study_End
+   764                           	line	97
+   765                           	
+   766  02A0                     l3675:	
+   767                           ;main.c: 97: StudyVS1838DATA = Read_EEPROM_u8(0x00);
+   768  02A0  3000               	movlw	(0)
+   769  02A1  22F0               	fcall	_Read_EEPROM_u8
+   770  02A2  1283               	bcf	status, 5	;RP0=0, select bank0
+   771  02A3  1303               	bcf	status, 6	;RP1=0, select bank0
+   772  02A4  00B5               	movwf	(??_main+0)+0
+   773  02A5  0835               	movf	(??_main+0)+0,w
+   774  02A6  00A4               	movwf	(_StudyVS1838DATA)
+   775                           	line	98
+   776                           	
+   777  02A7                     l3677:	
+   778                           ;main.c: 98: if( StudyVS1838DATA == 0XFF)
+   779  02A7  0824               	movf	(_StudyVS1838DATA),w
+   780  02A8  3AFF               	xorlw	0FFh
+   781  02A9  1D03               	skipz
+   782  02AA  2AAC               	goto	u2801
+   783  02AB  2AAD               	goto	u2800
+   784  02AC                     u2801:
+   785  02AC  2AB3               	goto	l3681
+   786  02AD                     u2800:
+   787                           	line	99
+   788                           	
+   789  02AD                     l3679:	
+   790                           ;main.c: 99: StudyVS1838DATA = 0x90;
+   791  02AD  3090               	movlw	(090h)
+   792  02AE  00B5               	movwf	(??_main+0)+0
+   793  02AF  0835               	movf	(??_main+0)+0,w
+   794  02B0  00A4               	movwf	(_StudyVS1838DATA)
+   795  02B1  2AB3               	goto	l3681
+   796                           	
+   797  02B2                     l1115:	
+   798  02B2  2AB3               	goto	l3681
+   799                           	line	100
+   800                           ;main.c: 100: while(1) {
+   801                           	
+   802  02B3                     l1116:	
+   803                           	line	101
+   804                           	
+   805  02B3                     l3681:	
+   806                           # 101 "main.c"
+   807  02B3  0064               clrwdt ;#
+   808                           psect	maintext
+   809                           	line	102
+   810                           	
+   811  02B4                     l3683:	
+   812                           ;main.c: 102: Control();
+   813  02B4  20C5               	fcall	_Control
+   814  02B5  2AB3               	goto	l3681
+   815                           	line	103
+   816                           	
+   817  02B6                     l1117:	
+   818                           	line	100
+   819  02B6  2AB3               	goto	l3681
+   820                           	
+   821  02B7                     l1118:	
+   822                           	line	104
+   823                           	
+   824  02B7                     l1119:	
+   825                           	global	start
+   826  02B7  2810               	ljmp	start
+   827                           	opt stack 0
+   828                           GLOBAL	__end_of_main
+   829  02B8                     	__end_of_main:
+   830 ;; =============== function _main ends ============
+   831                           
+   832                           	signat	_main,88
+   833                           	global	_Control
+   834                           psect	text437,local,class=CODE,delta=2
+   835                           global __ptext437
+   836  00C5                     __ptext437:
+   837                           
+   838 ;; *************** function _Control *****************
+   839 ;; Defined at:
+   840 ;;		line 385 in file "main.c"
+   841 ;; Parameters:    Size  Location     Type
+   842 ;;		None
+   843 ;; Auto vars:     Size  Location     Type
+   844 ;;		None
+   845 ;; Return value:  Size  Location     Type
+   846 ;;		None               void
+   847 ;; Registers used:
+   848 ;;		wreg, status,2, status,0, pclath, cstack
+   849 ;; Tracked objects:
+   850 ;;		On entry : 0/0
+   851 ;;		On exit  : 0/0
+   852 ;;		Unchanged: 0/0
+   853 ;; Data sizes:     COMMON   BANK0   BANK1
+   854 ;;      Params:         0       0       0
+   855 ;;      Locals:         0       0       0
+   856 ;;      Temps:          0       1       0
+   857 ;;      Totals:         0       1       0
+   858 ;;Total ram usage:        1 bytes
+   859 ;; Hardware stack levels used:    1
+   860 ;; Hardware stack levels required when called:    4
+   861 ;; This function calls:
+   862 ;;		_isKeyPressed
+   863 ;;		_Delay_xms
+   864 ;;		_VS1838_Process
+   865 ;;		_Write_EEPROM_u8
+   866 ;;		_isSwitchOn
+   867 ;; This function is called by:
+   868 ;;		_main
+   869 ;; This function uses a non-reentrant model
+   870 ;;
+   871                           psect	text437
+   872                           	file	"main.c"
+   873                           	line	385
+   874                           	global	__size_of_Control
+   875  008A                     	__size_of_Control	equ	__end_of_Control-_Control
+   876                           	
+   877  00C5                     _Control:	
+   878                           	opt	stack 3
+   879                           ; Regs used in _Control: [wreg+status,2+status,0+pclath+cstack]
+   880                           	line	386
+   881                           	
+   882  00C5                     l3615:	
+   883                           ;main.c: 386: if(isKeyPressed()) {
+   884  00C5  231A               	fcall	_isKeyPressed
+   885  00C6  3A00               	xorlw	0
+   886  00C7  1903               	skipnz
+   887  00C8  28CA               	goto	u2711
+   888  00C9  28CB               	goto	u2710
+   889  00CA                     u2711:
+   890  00CA  28F0               	goto	l1174
+   891  00CB                     u2710:
+   892                           	line	387
+   893                           	
+   894  00CB                     l3617:	
+   895                           ;main.c: 387: PC4=0;
+   896  00CB  1283               	bcf	status, 5	;RP0=0, select bank0
+   897  00CC  1303               	bcf	status, 6	;RP1=0, select bank0
+   898  00CD  1207               	bcf	(60/8),(60)&7
+   899                           	line	388
+   900                           ;main.c: 388: while(!VS1838_Process()) {
+   901  00CE  28D7               	goto	l1175
+   902                           	
+   903  00CF                     l1176:	
+   904                           	line	389
+   905                           ;main.c: 389: PC3=1;
+   906  00CF  1283               	bcf	status, 5	;RP0=0, select bank0
+   907  00D0  1303               	bcf	status, 6	;RP1=0, select bank0
+   908  00D1  1587               	bsf	(59/8),(59)&7
+   909                           	line	390
+   910                           	
+   911  00D2                     l3619:	
+   912                           ;main.c: 390: Delay_xms(1);
+   913  00D2  3001               	movlw	low(01h)
+   914  00D3  00AB               	movwf	(?_Delay_xms)
+   915  00D4  3000               	movlw	high(01h)
+   916  00D5  00AC               	movwf	((?_Delay_xms))+1
+   917  00D6  2275               	fcall	_Delay_xms
+   918                           	line	394
+   919                           	
+   920  00D7                     l1175:	
+   921                           	line	388
+   922  00D7  214F               	fcall	_VS1838_Process
+   923  00D8  3A00               	xorlw	0
+   924  00D9  1903               	skipnz
+   925  00DA  28DC               	goto	u2721
+   926  00DB  28DD               	goto	u2720
+   927  00DC                     u2721:
+   928  00DC  28CF               	goto	l1176
+   929  00DD                     u2720:
+   930  00DD  28DE               	goto	l3621
+   931                           	
+   932  00DE                     l1177:	
+   933                           	line	395
+   934                           	
+   935  00DE                     l3621:	
+   936                           ;main.c: 394: }
+   937                           ;main.c: 395: Write_EEPROM_u8(0x00,VS1838_Data);
+   938  00DE  1283               	bcf	status, 5	;RP0=0, select bank0
+   939  00DF  1303               	bcf	status, 6	;RP1=0, select bank0
+   940  00E0  0825               	movf	(_VS1838_Data),w
+   941  00E1  00B4               	movwf	(??_Control+0)+0
+   942  00E2  0834               	movf	(??_Control+0)+0,w
+   943  00E3  00B1               	movwf	(?_Write_EEPROM_u8)
+   944  00E4  3000               	movlw	(0)
+   945  00E5  224D               	fcall	_Write_EEPROM_u8
+   946                           	line	396
+   947                           	
+   948  00E6                     l3623:	
+   949                           ;main.c: 396: StudyVS1838DATA = VS1838_Data;
+   950  00E6  1283               	bcf	status, 5	;RP0=0, select bank0
+   951  00E7  1303               	bcf	status, 6	;RP1=0, select bank0
+   952  00E8  0825               	movf	(_VS1838_Data),w
+   953  00E9  00B4               	movwf	(??_Control+0)+0
+   954  00EA  0834               	movf	(??_Control+0)+0,w
+   955  00EB  00A4               	movwf	(_StudyVS1838DATA)
+   956                           	line	397
+   957                           	
+   958  00EC                     l3625:	
+   959                           ;main.c: 397: VS1838_Data=0;
+   960  00EC  01A5               	clrf	(_VS1838_Data)
+   961                           	line	398
+   962                           	
+   963  00ED                     l3627:	
+   964                           ;main.c: 398: PC3=0;
+   965  00ED  1187               	bcf	(59/8),(59)&7
+   966                           	line	399
+   967                           	
+   968  00EE                     l3629:	
+   969                           ;main.c: 399: PC4=0;
+   970  00EE  1207               	bcf	(60/8),(60)&7
+   971                           	line	400
+   972                           ;main.c: 400: } else {
+   973  00EF  294E               	goto	l1192
+   974                           	
+   975  00F0                     l1174:	
+   976                           	line	403
+   977                           ;main.c: 403: if(PC0 == 0) {
+   978  00F0  1283               	bcf	status, 5	;RP0=0, select bank0
+   979  00F1  1303               	bcf	status, 6	;RP1=0, select bank0
+   980  00F2  1807               	btfsc	(56/8),(56)&7
+   981  00F3  28F5               	goto	u2731
+   982  00F4  28F6               	goto	u2730
+   983  00F5                     u2731:
+   984  00F5  2900               	goto	l3635
+   985  00F6                     u2730:
+   986                           	line	404
+   987                           	
+   988  00F6                     l3631:	
+   989                           ;main.c: 404: VS838_Receive_Data=0;
+   990  00F6  3000               	movlw	0
+   991  00F7  00FD               	movwf	(_VS838_Receive_Data+3)
+   992  00F8  3000               	movlw	0
+   993  00F9  00FC               	movwf	(_VS838_Receive_Data+2)
+   994  00FA  3000               	movlw	0
+   995  00FB  00FB               	movwf	(_VS838_Receive_Data+1)
+   996  00FC  3000               	movlw	0
+   997  00FD  00FA               	movwf	(_VS838_Receive_Data)
+   998                           
+   999                           	line	405
+  1000                           	
+  1001  00FE                     l3633:	
+  1002                           ;main.c: 405: PC4=0;
+  1003  00FE  1207               	bcf	(60/8),(60)&7
+  1004                           	line	406
+  1005                           ;main.c: 406: } else {
+  1006  00FF  294E               	goto	l1192
+  1007                           	
+  1008  0100                     l1179:	
+  1009                           	line	407
+  1010                           	
+  1011  0100                     l3635:	
+  1012                           ;main.c: 407: VS1838_Process();
+  1013  0100  214F               	fcall	_VS1838_Process
+  1014                           	line	408
+  1015                           ;main.c: 408: if(isSwitchOn()) {
+  1016  0101  2310               	fcall	_isSwitchOn
+  1017  0102  3A00               	xorlw	0
+  1018  0103  1903               	skipnz
+  1019  0104  2906               	goto	u2741
+  1020  0105  2907               	goto	u2740
+  1021  0106                     u2741:
+  1022  0106  2920               	goto	l3647
+  1023  0107                     u2740:
+  1024                           	line	409
+  1025                           	
+  1026  0107                     l3637:	
+  1027                           ;main.c: 409: if(VS1838_Data == StudyVS1838DATA) {
+  1028  0107  1283               	bcf	status, 5	;RP0=0, select bank0
+  1029  0108  1303               	bcf	status, 6	;RP1=0, select bank0
+  1030  0109  0825               	movf	(_VS1838_Data),w
+  1031  010A  0624               	xorwf	(_StudyVS1838DATA),w
+  1032  010B  1D03               	skipz
+  1033  010C  290E               	goto	u2751
+  1034  010D  290F               	goto	u2750
+  1035  010E                     u2751:
+  1036  010E  294E               	goto	l1192
+  1037  010F                     u2750:
+  1038                           	line	410
+  1039                           	
+  1040  010F                     l3639:	
+  1041                           ;main.c: 410: if(flag_led_put == 0) {
+  1042  010F  08A9               	movf	(_flag_led_put),f
+  1043  0110  1D03               	skipz
+  1044  0111  2913               	goto	u2761
+  1045  0112  2914               	goto	u2760
+  1046  0113                     u2761:
+  1047  0113  291A               	goto	l1183
+  1048  0114                     u2760:
+  1049                           	line	411
+  1050                           	
+  1051  0114                     l3641:	
+  1052                           ;main.c: 411: VS1838_Data=0;
+  1053  0114  01A5               	clrf	(_VS1838_Data)
+  1054                           	line	412
+  1055                           	
+  1056  0115                     l3643:	
+  1057                           ;main.c: 412: flag_led_put=1;
+  1058  0115  01A9               	clrf	(_flag_led_put)
+  1059  0116  1403               	bsf	status,0
+  1060  0117  0DA9               	rlf	(_flag_led_put),f
+  1061                           	line	413
+  1062                           	
+  1063  0118                     l3645:	
+  1064                           ;main.c: 413: PC4=1;
+  1065  0118  1607               	bsf	(60/8),(60)&7
+  1066                           	line	414
+  1067                           ;main.c: 414: } else {
+  1068  0119  294E               	goto	l1192
+  1069                           	
+  1070  011A                     l1183:	
+  1071                           	line	415
+  1072                           ;main.c: 415: VS1838_Data=0;
+  1073  011A  01A5               	clrf	(_VS1838_Data)
+  1074                           	line	416
+  1075                           ;main.c: 416: flag_led_put=0;
+  1076  011B  01A9               	clrf	(_flag_led_put)
+  1077                           	line	417
+  1078                           ;main.c: 417: PC4=0;
+  1079  011C  1207               	bcf	(60/8),(60)&7
+  1080  011D  294E               	goto	l1192
+  1081                           	line	418
+  1082                           	
+  1083  011E                     l1184:	
+  1084  011E  294E               	goto	l1192
+  1085                           	line	419
+  1086                           	
+  1087  011F                     l1182:	
+  1088                           	line	420
+  1089                           ;main.c: 418: }
+  1090                           ;main.c: 419: }
+  1091                           ;main.c: 420: } else {
+  1092  011F  294E               	goto	l1192
+  1093                           	
+  1094  0120                     l1181:	
+  1095                           	line	421
+  1096                           	
+  1097  0120                     l3647:	
+  1098                           ;main.c: 421: if(VS1838_Data == StudyVS1838DATA) {
+  1099  0120  1283               	bcf	status, 5	;RP0=0, select bank0
+  1100  0121  1303               	bcf	status, 6	;RP1=0, select bank0
+  1101  0122  0825               	movf	(_VS1838_Data),w
+  1102  0123  0624               	xorwf	(_StudyVS1838DATA),w
+  1103  0124  1D03               	skipz
+  1104  0125  2927               	goto	u2771
+  1105  0126  2928               	goto	u2770
+  1106  0127                     u2771:
+  1107  0127  294E               	goto	l1192
+  1108  0128                     u2770:
+  1109                           	line	422
+  1110                           	
+  1111  0128                     l3649:	
+  1112                           ;main.c: 422: PC4=1;
+  1113  0128  1607               	bsf	(60/8),(60)&7
+  1114                           	line	423
+  1115                           ;main.c: 423: vs_times=0;
+  1116  0129  01AA               	clrf	(_vs_times)
+  1117  012A  292B               	goto	l3651
+  1118                           	line	424
+  1119                           ;main.c: 424: while(1) {
+  1120                           	
+  1121  012B                     l1187:	
+  1122                           	line	425
+  1123                           	
+  1124  012B                     l3651:	
+  1125                           ;main.c: 425: if((vs_times==255)&&(VS1838_Data == StudyVS1838DATA))
+  1126  012B  1283               	bcf	status, 5	;RP0=0, select bank0
+  1127  012C  1303               	bcf	status, 6	;RP1=0, select bank0
+  1128  012D  082A               	movf	(_vs_times),w
+  1129  012E  3AFF               	xorlw	0FFh
+  1130  012F  1D03               	skipz
+  1131  0130  2932               	goto	u2781
+  1132  0131  2933               	goto	u2780
+  1133  0132                     u2781:
+  1134  0132  293C               	goto	l3659
+  1135  0133                     u2780:
+  1136                           	
+  1137  0133                     l3653:	
+  1138  0133  0825               	movf	(_VS1838_Data),w
+  1139  0134  0624               	xorwf	(_StudyVS1838DATA),w
+  1140  0135  1D03               	skipz
+  1141  0136  2938               	goto	u2791
+  1142  0137  2939               	goto	u2790
+  1143  0138                     u2791:
+  1144  0138  293C               	goto	l3659
+  1145  0139                     u2790:
+  1146  0139  2948               	goto	l1189
+  1147                           	line	426
+  1148                           	
+  1149  013A                     l3655:	
+  1150                           ;main.c: 426: break;
+  1151  013A  2948               	goto	l1189
+  1152                           	
+  1153  013B                     l3657:	
+  1154  013B  2941               	goto	l3661
+  1155                           	line	427
+  1156                           	
+  1157  013C                     l1188:	
+  1158                           	line	428
+  1159                           	
+  1160  013C                     l3659:	
+  1161                           ;main.c: 427: else
+  1162                           ;main.c: 428: vs_times++;
+  1163  013C  3001               	movlw	(01h)
+  1164  013D  00B4               	movwf	(??_Control+0)+0
+  1165  013E  0834               	movf	(??_Control+0)+0,w
+  1166  013F  07AA               	addwf	(_vs_times),f
+  1167  0140  2941               	goto	l3661
+  1168                           	
+  1169  0141                     l1190:	
+  1170                           	line	429
+  1171                           	
+  1172  0141                     l3661:	
+  1173                           ;main.c: 429: Delay_xms(1);
+  1174  0141  3001               	movlw	low(01h)
+  1175  0142  00AB               	movwf	(?_Delay_xms)
+  1176  0143  3000               	movlw	high(01h)
+  1177  0144  00AC               	movwf	((?_Delay_xms))+1
+  1178  0145  2275               	fcall	_Delay_xms
+  1179  0146  292B               	goto	l3651
+  1180                           	line	430
+  1181                           	
+  1182  0147                     l1191:	
+  1183                           	line	424
+  1184  0147  292B               	goto	l3651
+  1185                           	
+  1186  0148                     l1189:	
+  1187                           	line	431
+  1188                           ;main.c: 430: }
+  1189                           ;main.c: 431: VS1838_Data=0;
+  1190  0148  01A5               	clrf	(_VS1838_Data)
+  1191                           	line	432
+  1192                           ;main.c: 432: PC4=0;
+  1193  0149  1207               	bcf	(60/8),(60)&7
+  1194  014A  294E               	goto	l1192
+  1195                           	line	433
+  1196                           	
+  1197  014B                     l1186:	
+  1198  014B  294E               	goto	l1192
+  1199                           	line	434
+  1200                           	
+  1201  014C                     l1185:	
+  1202  014C  294E               	goto	l1192
+  1203                           	line	435
+  1204                           	
+  1205  014D                     l1180:	
+  1206  014D  294E               	goto	l1192
+  1207                           	line	436
+  1208                           	
+  1209  014E                     l1178:	
+  1210                           	line	437
+  1211                           	
+  1212  014E                     l1192:	
+  1213  014E  0008               	return
+  1214                           	opt stack 0
+  1215                           GLOBAL	__end_of_Control
+  1216  014F                     	__end_of_Control:
+  1217 ;; =============== function _Control ends ============
+  1218                           
+  1219                           	signat	_Control,88
+  1220                           	global	_Write_EEPROM_u8
+  1221                           psect	text438,local,class=CODE,delta=2
+  1222                           global __ptext438
+  1223  024D                     __ptext438:
+  1224                           
+  1225 ;; *************** function _Write_EEPROM_u8 *****************
+  1226 ;; Defined at:
+  1227 ;;		line 502 in file "main.c"
+  1228 ;; Parameters:    Size  Location     Type
+  1229 ;;  EEAddress       1    wreg     unsigned char 
+  1230 ;;  EEDatas         1    6[BANK0 ] unsigned char 
+  1231 ;; Auto vars:     Size  Location     Type
+  1232 ;;  EEAddress       1    7[BANK0 ] unsigned char 
+  1233 ;; Return value:  Size  Location     Type
+  1234 ;;		None               void
+  1235 ;; Registers used:
+  1236 ;;		wreg, status,2, status,0, pclath, cstack
+  1237 ;; Tracked objects:
+  1238 ;;		On entry : 0/0
+  1239 ;;		On exit  : 0/0
+  1240 ;;		Unchanged: 0/0
+  1241 ;; Data sizes:     COMMON   BANK0   BANK1
+  1242 ;;      Params:         0       1       0
+  1243 ;;      Locals:         0       1       0
+  1244 ;;      Temps:          0       0       0
+  1245 ;;      Totals:         0       2       0
+  1246 ;;Total ram usage:        2 bytes
+  1247 ;; Hardware stack levels used:    1
+  1248 ;; Hardware stack levels required when called:    3
+  1249 ;; This function calls:
+  1250 ;;		_Delay_xms
+  1251 ;; This function is called by:
+  1252 ;;		_Control
+  1253 ;;		_Write_EEPROM_u16
+  1254 ;; This function uses a non-reentrant model
+  1255 ;;
+  1256                           psect	text438
+  1257                           	file	"main.c"
+  1258                           	line	502
+  1259                           	global	__size_of_Write_EEPROM_u8
+  1260  0028                     	__size_of_Write_EEPROM_u8	equ	__end_of_Write_EEPROM_u8-_Write_EEPROM_u8
+  1261                           	
+  1262  024D                     _Write_EEPROM_u8:	
+  1263                           	opt	stack 3
+  1264                           ; Regs used in _Write_EEPROM_u8: [wreg+status,2+status,0+pclath+cstack]
+  1265                           ;Write_EEPROM_u8@EEAddress stored from wreg
+  1266                           	line	504
+  1267  024D  1283               	bcf	status, 5	;RP0=0, select bank0
+  1268  024E  1303               	bcf	status, 6	;RP1=0, select bank0
+  1269  024F  00B2               	movwf	(Write_EEPROM_u8@EEAddress)
+  1270                           	
+  1271  0250                     l3597:	
+  1272                           ;main.c: 504: GIE=0;
+  1273  0250  138B               	bcf	(95/8),(95)&7
+  1274                           	line	505
+  1275                           ;main.c: 505: if(GIE==0&&WR==0) {
+  1276  0251  1B8B               	btfsc	(95/8),(95)&7
+  1277  0252  2A54               	goto	u2691
+  1278  0253  2A55               	goto	u2690
+  1279  0254                     u2691:
+  1280  0254  2A74               	goto	l1211
+  1281  0255                     u2690:
+  1282                           	
+  1283  0255                     l3599:	
+  1284  0255  1683               	bsf	status, 5	;RP0=1, select bank1
+  1285  0256  1303               	bcf	status, 6	;RP1=0, select bank1
+  1286  0257  181D               	btfsc	(1256/8)^080h,(1256)&7
+  1287  0258  2A5A               	goto	u2701
+  1288  0259  2A5B               	goto	u2700
+  1289  025A                     u2701:
+  1290  025A  2A74               	goto	l1211
+  1291  025B                     u2700:
+  1292                           	line	506
+  1293                           	
+  1294  025B                     l3601:	
+  1295                           ;main.c: 506: EEADR = EEAddress;
+  1296  025B  1283               	bcf	status, 5	;RP0=0, select bank0
+  1297  025C  1303               	bcf	status, 6	;RP1=0, select bank0
+  1298  025D  0832               	movf	(Write_EEPROM_u8@EEAddress),w
+  1299  025E  1683               	bsf	status, 5	;RP0=1, select bank1
+  1300  025F  1303               	bcf	status, 6	;RP1=0, select bank1
+  1301  0260  009B               	movwf	(155)^080h	;volatile
+  1302                           	line	507
+  1303                           ;main.c: 507: EEDAT = EEDatas;
+  1304  0261  1283               	bcf	status, 5	;RP0=0, select bank0
+  1305  0262  1303               	bcf	status, 6	;RP1=0, select bank0
+  1306  0263  0831               	movf	(Write_EEPROM_u8@EEDatas),w
+  1307  0264  1683               	bsf	status, 5	;RP0=1, select bank1
+  1308  0265  1303               	bcf	status, 6	;RP1=0, select bank1
+  1309  0266  009A               	movwf	(154)^080h	;volatile
+  1310                           	line	508
+  1311                           	
+  1312  0267                     l3603:	
+  1313                           ;main.c: 508: WREN3=1;
+  1314  0267  169C               	bsf	(1253/8)^080h,(1253)&7
+  1315                           	line	509
+  1316                           	
+  1317  0268                     l3605:	
+  1318                           ;main.c: 509: WREN2=1;
+  1319  0268  161C               	bsf	(1252/8)^080h,(1252)&7
+  1320                           	line	510
+  1321                           	
+  1322  0269                     l3607:	
+  1323                           ;main.c: 510: WREN1=1;
+  1324  0269  151C               	bsf	(1250/8)^080h,(1250)&7
+  1325                           	line	511
+  1326                           	
+  1327  026A                     l3609:	
+  1328                           ;main.c: 511: WR=1;
+  1329  026A  141D               	bsf	(1256/8)^080h,(1256)&7
+  1330                           	line	512
+  1331                           	
+  1332  026B                     l3611:	
+  1333                           ;main.c: 512: GIE=1;
+  1334  026B  178B               	bsf	(95/8),(95)&7
+  1335                           	line	513
+  1336                           	
+  1337  026C                     l3613:	
+  1338                           ;main.c: 513: Delay_xms(2);
+  1339  026C  3002               	movlw	low(02h)
+  1340  026D  1283               	bcf	status, 5	;RP0=0, select bank0
+  1341  026E  1303               	bcf	status, 6	;RP1=0, select bank0
+  1342  026F  00AB               	movwf	(?_Delay_xms)
+  1343  0270  3000               	movlw	high(02h)
+  1344  0271  00AC               	movwf	((?_Delay_xms))+1
+  1345  0272  2275               	fcall	_Delay_xms
+  1346  0273  2A74               	goto	l1211
+  1347                           	line	514
+  1348                           	
+  1349  0274                     l1210:	
+  1350                           	line	515
+  1351                           	
+  1352  0274                     l1211:	
+  1353  0274  0008               	return
+  1354                           	opt stack 0
+  1355                           GLOBAL	__end_of_Write_EEPROM_u8
+  1356  0275                     	__end_of_Write_EEPROM_u8:
+  1357 ;; =============== function _Write_EEPROM_u8 ends ============
+  1358                           
+  1359                           	signat	_Write_EEPROM_u8,8312
+  1360                           	global	_LED_Study_End
+  1361                           psect	text439,local,class=CODE,delta=2
+  1362                           global __ptext439
+  1363  01ED                     __ptext439:
+  1364                           
+  1365 ;; *************** function _LED_Study_End *****************
+  1366 ;; Defined at:
+  1367 ;;		line 462 in file "main.c"
+  1368 ;; Parameters:    Size  Location     Type
+  1369 ;;		None
+  1370 ;; Auto vars:     Size  Location     Type
+  1371 ;;		None
+  1372 ;; Return value:  Size  Location     Type
+  1373 ;;		None               void
+  1374 ;; Registers used:
+  1375 ;;		wreg, status,2, status,0, pclath, cstack
+  1376 ;; Tracked objects:
+  1377 ;;		On entry : 0/0
+  1378 ;;		On exit  : 0/0
+  1379 ;;		Unchanged: 0/0
+  1380 ;; Data sizes:     COMMON   BANK0   BANK1
+  1381 ;;      Params:         0       0       0
+  1382 ;;      Locals:         0       0       0
+  1383 ;;      Temps:          0       0       0
+  1384 ;;      Totals:         0       0       0
+  1385 ;;Total ram usage:        0 bytes
+  1386 ;; Hardware stack levels used:    1
+  1387 ;; Hardware stack levels required when called:    3
+  1388 ;; This function calls:
+  1389 ;;		_Delay_xms
+  1390 ;; This function is called by:
+  1391 ;;		_main
+  1392 ;; This function uses a non-reentrant model
+  1393 ;;
+  1394                           psect	text439
+  1395                           	file	"main.c"
+  1396                           	line	462
+  1397                           	global	__size_of_LED_Study_End
+  1398  0031                     	__size_of_LED_Study_End	equ	__end_of_LED_Study_End-_LED_Study_End
+  1399                           	
+  1400  01ED                     _LED_Study_End:	
+  1401                           	opt	stack 4
+  1402                           ; Regs used in _LED_Study_End: [wreg+status,2+status,0+pclath+cstack]
+  1403                           	line	463
+  1404                           	
+  1405  01ED                     l3583:	
+  1406                           ;main.c: 463: PC3 = 1;
+  1407  01ED  1283               	bcf	status, 5	;RP0=0, select bank0
+  1408  01EE  1303               	bcf	status, 6	;RP1=0, select bank0
+  1409  01EF  1587               	bsf	(59/8),(59)&7
+  1410                           	line	464
+  1411                           	
+  1412  01F0                     l3585:	
+  1413                           ;main.c: 464: Delay_xms(100);
+  1414  01F0  3064               	movlw	low(064h)
+  1415  01F1  00AB               	movwf	(?_Delay_xms)
+  1416  01F2  3000               	movlw	high(064h)
+  1417  01F3  00AC               	movwf	((?_Delay_xms))+1
+  1418  01F4  2275               	fcall	_Delay_xms
+  1419                           	line	465
+  1420                           	
+  1421  01F5                     l3587:	
+  1422                           ;main.c: 465: PC3 = 0;
+  1423  01F5  1283               	bcf	status, 5	;RP0=0, select bank0
+  1424  01F6  1303               	bcf	status, 6	;RP1=0, select bank0
+  1425  01F7  1187               	bcf	(59/8),(59)&7
+  1426                           	line	466
+  1427                           ;main.c: 466: Delay_xms(100);
+  1428  01F8  3064               	movlw	low(064h)
+  1429  01F9  00AB               	movwf	(?_Delay_xms)
+  1430  01FA  3000               	movlw	high(064h)
+  1431  01FB  00AC               	movwf	((?_Delay_xms))+1
+  1432  01FC  2275               	fcall	_Delay_xms
+  1433                           	line	467
+  1434                           	
+  1435  01FD                     l3589:	
+  1436                           ;main.c: 467: PC3 = 1;
+  1437  01FD  1283               	bcf	status, 5	;RP0=0, select bank0
+  1438  01FE  1303               	bcf	status, 6	;RP1=0, select bank0
+  1439  01FF  1587               	bsf	(59/8),(59)&7
+  1440                           	line	468
+  1441                           ;main.c: 468: Delay_xms(100);
+  1442  0200  3064               	movlw	low(064h)
+  1443  0201  00AB               	movwf	(?_Delay_xms)
+  1444  0202  3000               	movlw	high(064h)
+  1445  0203  00AC               	movwf	((?_Delay_xms))+1
+  1446  0204  2275               	fcall	_Delay_xms
+  1447                           	line	469
+  1448                           	
+  1449  0205                     l3591:	
+  1450                           ;main.c: 469: PC3 = 0;
+  1451  0205  1283               	bcf	status, 5	;RP0=0, select bank0
+  1452  0206  1303               	bcf	status, 6	;RP1=0, select bank0
+  1453  0207  1187               	bcf	(59/8),(59)&7
+  1454                           	line	470
+  1455                           ;main.c: 470: Delay_xms(100);
+  1456  0208  3064               	movlw	low(064h)
+  1457  0209  00AB               	movwf	(?_Delay_xms)
+  1458  020A  3000               	movlw	high(064h)
+  1459  020B  00AC               	movwf	((?_Delay_xms))+1
+  1460  020C  2275               	fcall	_Delay_xms
+  1461                           	line	471
+  1462                           	
+  1463  020D                     l3593:	
+  1464                           ;main.c: 471: PC3 = 1;
+  1465  020D  1283               	bcf	status, 5	;RP0=0, select bank0
+  1466  020E  1303               	bcf	status, 6	;RP1=0, select bank0
+  1467  020F  1587               	bsf	(59/8),(59)&7
+  1468                           	line	472
+  1469                           ;main.c: 472: Delay_xms(100);
+  1470  0210  3064               	movlw	low(064h)
+  1471  0211  00AB               	movwf	(?_Delay_xms)
+  1472  0212  3000               	movlw	high(064h)
+  1473  0213  00AC               	movwf	((?_Delay_xms))+1
+  1474  0214  2275               	fcall	_Delay_xms
+  1475                           	line	473
+  1476                           	
+  1477  0215                     l3595:	
+  1478                           ;main.c: 473: PC3 = 0;
+  1479  0215  1283               	bcf	status, 5	;RP0=0, select bank0
+  1480  0216  1303               	bcf	status, 6	;RP1=0, select bank0
+  1481  0217  1187               	bcf	(59/8),(59)&7
+  1482                           	line	474
+  1483                           ;main.c: 474: Delay_xms(100);
+  1484  0218  3064               	movlw	low(064h)
+  1485  0219  00AB               	movwf	(?_Delay_xms)
+  1486  021A  3000               	movlw	high(064h)
+  1487  021B  00AC               	movwf	((?_Delay_xms))+1
+  1488  021C  2275               	fcall	_Delay_xms
+  1489                           	line	475
+  1490                           	
+  1491  021D                     l1201:	
+  1492  021D  0008               	return
+  1493                           	opt stack 0
+  1494                           GLOBAL	__end_of_LED_Study_End
+  1495  021E                     	__end_of_LED_Study_End:
+  1496 ;; =============== function _LED_Study_End ends ============
+  1497                           
+  1498                           	signat	_LED_Study_End,88
+  1499                           	global	_Delay_xms
+  1500                           psect	text440,local,class=CODE,delta=2
+  1501                           global __ptext440
+  1502  0275                     __ptext440:
+  1503                           
+  1504 ;; *************** function _Delay_xms *****************
+  1505 ;; Defined at:
+  1506 ;;		line 535 in file "main.c"
+  1507 ;; Parameters:    Size  Location     Type
+  1508 ;;  x               2    0[BANK0 ] unsigned int 
+  1509 ;; Auto vars:     Size  Location     Type
+  1510 ;;  i               2    4[BANK0 ] unsigned int 
+  1511 ;; Return value:  Size  Location     Type
+  1512 ;;		None               void
+  1513 ;; Registers used:
+  1514 ;;		wreg, status,2
+  1515 ;; Tracked objects:
+  1516 ;;		On entry : 0/0
+  1517 ;;		On exit  : 0/0
+  1518 ;;		Unchanged: 0/0
+  1519 ;; Data sizes:     COMMON   BANK0   BANK1
+  1520 ;;      Params:         0       2       0
+  1521 ;;      Locals:         0       2       0
+  1522 ;;      Temps:          0       2       0
+  1523 ;;      Totals:         0       6       0
+  1524 ;;Total ram usage:        6 bytes
+  1525 ;; Hardware stack levels used:    1
+  1526 ;; Hardware stack levels required when called:    2
+  1527 ;; This function calls:
+  1528 ;;		Nothing
+  1529 ;; This function is called by:
+  1530 ;;		_Control
+  1531 ;;		_LED_Study_End
+  1532 ;;		_Write_EEPROM_u8
+  1533 ;;		_ADC_Init
+  1534 ;; This function uses a non-reentrant model
+  1535 ;;
+  1536                           psect	text440
+  1537                           	file	"main.c"
+  1538                           	line	535
+  1539                           	global	__size_of_Delay_xms
+  1540  0023                     	__size_of_Delay_xms	equ	__end_of_Delay_xms-_Delay_xms
+  1541                           	
+  1542  0275                     _Delay_xms:	
+  1543                           	opt	stack 3
+  1544                           ; Regs used in _Delay_xms: [wreg+status,2]
+  1545                           	line	537
+  1546                           	
+  1547  0275                     l3577:	
+  1548                           ;main.c: 536: unsigned int i;
+  1549                           ;main.c: 537: for(i=0; i<x; i++) {
+  1550  0275  1283               	bcf	status, 5	;RP0=0, select bank0
+  1551  0276  1303               	bcf	status, 6	;RP1=0, select bank0
+  1552  0277  01AF               	clrf	(Delay_xms@i)
+  1553  0278  01B0               	clrf	(Delay_xms@i+1)
+  1554  0279  2A8C               	goto	l1217
+  1555                           	
+  1556  027A                     l1218:	
+  1557                           	line	538
+  1558                           	
+  1559  027A                     l3579:	
+  1560                           ;main.c: 538: _delay((unsigned long)((1)*(16000000/4000.0)));
+  1561                           	opt asmopt_off
+  1562  027A  3006               movlw	6
+  1563  027B  00AE               movwf	((??_Delay_xms+0)+0+1),f
+  1564  027C  3030               	movlw	48
+  1565  027D  00AD               movwf	((??_Delay_xms+0)+0),f
+  1566  027E                     u2817:
+  1567  027E  0BAD               	decfsz	((??_Delay_xms+0)+0),f
+  1568  027F  2A7E               	goto	u2817
+  1569  0280  0BAE               	decfsz	((??_Delay_xms+0)+0+1),f
+  1570  0281  2A7E               	goto	u2817
+  1571  0282  0064               	clrwdt
+  1572                           opt asmopt_on
+  1573                           
+  1574                           	line	539
+  1575                           	
+  1576  0283                     l3581:	
+  1577                           # 539 "main.c"
+  1578  0283  0064               clrwdt ;#
+  1579                           psect	text440
+  1580                           	line	537
+  1581  0284  3001               	movlw	low(01h)
+  1582  0285  1283               	bcf	status, 5	;RP0=0, select bank0
+  1583  0286  1303               	bcf	status, 6	;RP1=0, select bank0
+  1584  0287  07AF               	addwf	(Delay_xms@i),f
+  1585  0288  1803               	skipnc
+  1586  0289  0AB0               	incf	(Delay_xms@i+1),f
+  1587  028A  3000               	movlw	high(01h)
+  1588  028B  07B0               	addwf	(Delay_xms@i+1),f
+  1589                           	
+  1590  028C                     l1217:	
+  1591  028C  082C               	movf	(Delay_xms@x+1),w
+  1592  028D  0230               	subwf	(Delay_xms@i+1),w
+  1593  028E  1D03               	skipz
+  1594  028F  2A92               	goto	u2685
+  1595  0290  082B               	movf	(Delay_xms@x),w
+  1596  0291  022F               	subwf	(Delay_xms@i),w
+  1597  0292                     u2685:
+  1598  0292  1C03               	skipc
+  1599  0293  2A95               	goto	u2681
+  1600  0294  2A96               	goto	u2680
+  1601  0295                     u2681:
+  1602  0295  2A7A               	goto	l3579
+  1603  0296                     u2680:
+  1604  0296  2A97               	goto	l1220
+  1605                           	
+  1606  0297                     l1219:	
+  1607                           	line	541
+  1608                           	
+  1609  0297                     l1220:	
+  1610  0297  0008               	return
+  1611                           	opt stack 0
+  1612                           GLOBAL	__end_of_Delay_xms
+  1613  0298                     	__end_of_Delay_xms:
+  1614 ;; =============== function _Delay_xms ends ============
+  1615                           
+  1616                           	signat	_Delay_xms,4216
+  1617                           	global	_Read_EEPROM_u8
+  1618                           psect	text441,local,class=CODE,delta=2
+  1619                           global __ptext441
+  1620  02F0                     __ptext441:
+  1621                           
+  1622 ;; *************** function _Read_EEPROM_u8 *****************
+  1623 ;; Defined at:
+  1624 ;;		line 519 in file "main.c"
+  1625 ;; Parameters:    Size  Location     Type
+  1626 ;;  EEAddress       1    wreg     unsigned char 
+  1627 ;; Auto vars:     Size  Location     Type
+  1628 ;;  EEAddress       1    1[BANK0 ] unsigned char 
+  1629 ;;  EepromData      1    2[BANK0 ] unsigned char 
+  1630 ;; Return value:  Size  Location     Type
+  1631 ;;                  1    wreg      unsigned char 
+  1632 ;; Registers used:
+  1633 ;;		wreg
+  1634 ;; Tracked objects:
+  1635 ;;		On entry : 0/0
+  1636 ;;		On exit  : 0/0
+  1637 ;;		Unchanged: 0/0
+  1638 ;; Data sizes:     COMMON   BANK0   BANK1
+  1639 ;;      Params:         0       0       0
+  1640 ;;      Locals:         0       2       0
+  1641 ;;      Temps:          0       1       0
+  1642 ;;      Totals:         0       3       0
+  1643 ;;Total ram usage:        3 bytes
+  1644 ;; Hardware stack levels used:    1
+  1645 ;; Hardware stack levels required when called:    2
+  1646 ;; This function calls:
+  1647 ;;		Nothing
+  1648 ;; This function is called by:
+  1649 ;;		_main
+  1650 ;;		_Read_EEPROM_u16
+  1651 ;; This function uses a non-reentrant model
+  1652 ;;
+  1653                           psect	text441
+  1654                           	file	"main.c"
+  1655                           	line	519
+  1656                           	global	__size_of_Read_EEPROM_u8
+  1657  0015                     	__size_of_Read_EEPROM_u8	equ	__end_of_Read_EEPROM_u8-_Read_EEPROM_u8
+  1658                           	
+  1659  02F0                     _Read_EEPROM_u8:	
+  1660                           	opt	stack 5
+  1661                           ; Regs used in _Read_EEPROM_u8: [wreg]
+  1662                           ;Read_EEPROM_u8@EEAddress stored from wreg
+  1663  02F0  1283               	bcf	status, 5	;RP0=0, select bank0
+  1664  02F1  1303               	bcf	status, 6	;RP1=0, select bank0
+  1665  02F2  00AC               	movwf	(Read_EEPROM_u8@EEAddress)
+  1666                           	line	520
+  1667                           	
+  1668  02F3                     l3567:	
+  1669                           ;main.c: 520: unsigned char EepromData=0;
+  1670  02F3  01AD               	clrf	(Read_EEPROM_u8@EepromData)
+  1671                           	line	521
+  1672                           	
+  1673  02F4                     l3569:	
+  1674                           ;main.c: 521: EEADR = EEAddress;
+  1675  02F4  082C               	movf	(Read_EEPROM_u8@EEAddress),w
+  1676  02F5  1683               	bsf	status, 5	;RP0=1, select bank1
+  1677  02F6  1303               	bcf	status, 6	;RP1=0, select bank1
+  1678  02F7  009B               	movwf	(155)^080h	;volatile
+  1679                           	line	522
+  1680                           	
+  1681  02F8                     l3571:	
+  1682                           ;main.c: 522: RD = 1;
+  1683  02F8  141C               	bsf	(1248/8)^080h,(1248)&7
+  1684                           	line	523
+  1685                           	
+  1686  02F9                     l3573:	
+  1687                           ;main.c: 523: _nop();
+  1688  02F9  0000               	nop
+  1689                           	line	524
+  1690                           ;main.c: 524: EepromData = EEDAT;
+  1691  02FA  1683               	bsf	status, 5	;RP0=1, select bank1
+  1692  02FB  1303               	bcf	status, 6	;RP1=0, select bank1
+  1693  02FC  081A               	movf	(154)^080h,w	;volatile
+  1694  02FD  1283               	bcf	status, 5	;RP0=0, select bank0
+  1695  02FE  1303               	bcf	status, 6	;RP1=0, select bank0
+  1696  02FF  00AB               	movwf	(??_Read_EEPROM_u8+0)+0
+  1697  0300  082B               	movf	(??_Read_EEPROM_u8+0)+0,w
+  1698  0301  00AD               	movwf	(Read_EEPROM_u8@EepromData)
+  1699                           	line	525
+  1700                           ;main.c: 525: return EepromData;
+  1701  0302  082D               	movf	(Read_EEPROM_u8@EepromData),w
+  1702  0303  2B04               	goto	l1214
+  1703                           	
+  1704  0304                     l3575:	
+  1705                           	line	526
+  1706                           	
+  1707  0304                     l1214:	
+  1708  0304  0008               	return
+  1709                           	opt stack 0
+  1710                           GLOBAL	__end_of_Read_EEPROM_u8
+  1711  0305                     	__end_of_Read_EEPROM_u8:
+  1712 ;; =============== function _Read_EEPROM_u8 ends ============
+  1713                           
+  1714                           	signat	_Read_EEPROM_u8,4217
+  1715                           	global	_isSwitchOn
+  1716                           psect	text442,local,class=CODE,delta=2
+  1717                           global __ptext442
+  1718  0310                     __ptext442:
+  1719                           
+  1720 ;; *************** function _isSwitchOn *****************
+  1721 ;; Defined at:
+  1722 ;;		line 451 in file "main.c"
+  1723 ;; Parameters:    Size  Location     Type
+  1724 ;;		None
+  1725 ;; Auto vars:     Size  Location     Type
+  1726 ;;		None
+  1727 ;; Return value:  Size  Location     Type
+  1728 ;;                  1    wreg      unsigned char 
+  1729 ;; Registers used:
+  1730 ;;		wreg, status,2, status,0
+  1731 ;; Tracked objects:
+  1732 ;;		On entry : 0/0
+  1733 ;;		On exit  : 0/0
+  1734 ;;		Unchanged: 0/0
+  1735 ;; Data sizes:     COMMON   BANK0   BANK1
+  1736 ;;      Params:         0       0       0
+  1737 ;;      Locals:         0       0       0
+  1738 ;;      Temps:          0       0       0
+  1739 ;;      Totals:         0       0       0
+  1740 ;;Total ram usage:        0 bytes
+  1741 ;; Hardware stack levels used:    1
+  1742 ;; Hardware stack levels required when called:    2
+  1743 ;; This function calls:
+  1744 ;;		Nothing
+  1745 ;; This function is called by:
+  1746 ;;		_Control
+  1747 ;; This function uses a non-reentrant model
+  1748 ;;
+  1749                           psect	text442
+  1750                           	file	"main.c"
+  1751                           	line	451
+  1752                           	global	__size_of_isSwitchOn
+  1753  000A                     	__size_of_isSwitchOn	equ	__end_of_isSwitchOn-_isSwitchOn
+  1754                           	
+  1755  0310                     _isSwitchOn:	
+  1756                           	opt	stack 4
+  1757                           ; Regs used in _isSwitchOn: [wreg+status,2+status,0]
+  1758                           	line	452
+  1759                           	
+  1760  0310                     l3551:	
+  1761                           ;main.c: 452: return PA5 ? 0:1;
+  1762  0310  1003               	clrc
+  1763  0311  1283               	bcf	status, 5	;RP0=0, select bank0
+  1764  0312  1303               	bcf	status, 6	;RP1=0, select bank0
+  1765  0313  1E85               	btfss	(45/8),(45)&7
+  1766  0314  1403               	setc
+  1767  0315  3000               	movlw	0
+  1768  0316  1803               	skipnc
+  1769  0317  3001               	movlw	1
+  1770                           
+  1771  0318  2B19               	goto	l1198
+  1772                           	
+  1773  0319                     l3553:	
+  1774                           	line	453
+  1775                           	
+  1776  0319                     l1198:	
+  1777  0319  0008               	return
+  1778                           	opt stack 0
+  1779                           GLOBAL	__end_of_isSwitchOn
+  1780  031A                     	__end_of_isSwitchOn:
+  1781 ;; =============== function _isSwitchOn ends ============
+  1782                           
+  1783                           	signat	_isSwitchOn,89
+  1784                           	global	_isKeyPressed
+  1785                           psect	text443,local,class=CODE,delta=2
+  1786                           global __ptext443
+  1787  031A                     __ptext443:
+  1788                           
+  1789 ;; *************** function _isKeyPressed *****************
+  1790 ;; Defined at:
+  1791 ;;		line 446 in file "main.c"
+  1792 ;; Parameters:    Size  Location     Type
+  1793 ;;		None
+  1794 ;; Auto vars:     Size  Location     Type
+  1795 ;;		None
+  1796 ;; Return value:  Size  Location     Type
+  1797 ;;                  1    wreg      unsigned char 
+  1798 ;; Registers used:
+  1799 ;;		wreg, status,2, status,0
+  1800 ;; Tracked objects:
+  1801 ;;		On entry : 0/0
+  1802 ;;		On exit  : 0/0
+  1803 ;;		Unchanged: 0/0
+  1804 ;; Data sizes:     COMMON   BANK0   BANK1
+  1805 ;;      Params:         0       0       0
+  1806 ;;      Locals:         0       0       0
+  1807 ;;      Temps:          0       0       0
+  1808 ;;      Totals:         0       0       0
+  1809 ;;Total ram usage:        0 bytes
+  1810 ;; Hardware stack levels used:    1
+  1811 ;; Hardware stack levels required when called:    2
+  1812 ;; This function calls:
+  1813 ;;		Nothing
+  1814 ;; This function is called by:
+  1815 ;;		_Control
+  1816 ;; This function uses a non-reentrant model
+  1817 ;;
+  1818                           psect	text443
+  1819                           	file	"main.c"
+  1820                           	line	446
+  1821                           	global	__size_of_isKeyPressed
+  1822  000A                     	__size_of_isKeyPressed	equ	__end_of_isKeyPressed-_isKeyPressed
+  1823                           	
+  1824  031A                     _isKeyPressed:	
+  1825                           	opt	stack 4
+  1826                           ; Regs used in _isKeyPressed: [wreg+status,2+status,0]
+  1827                           	line	447
+  1828                           	
+  1829  031A                     l3547:	
+  1830                           ;main.c: 447: return PC1 ? 0:1;
+  1831  031A  1003               	clrc
+  1832  031B  1283               	bcf	status, 5	;RP0=0, select bank0
+  1833  031C  1303               	bcf	status, 6	;RP1=0, select bank0
+  1834  031D  1C87               	btfss	(57/8),(57)&7
+  1835  031E  1403               	setc
+  1836  031F  3000               	movlw	0
+  1837  0320  1803               	skipnc
+  1838  0321  3001               	movlw	1
+  1839                           
+  1840  0322  2B23               	goto	l1195
+  1841                           	
+  1842  0323                     l3549:	
+  1843                           	line	448
+  1844                           	
+  1845  0323                     l1195:	
+  1846  0323  0008               	return
+  1847                           	opt stack 0
+  1848                           GLOBAL	__end_of_isKeyPressed
+  1849  0324                     	__end_of_isKeyPressed:
+  1850 ;; =============== function _isKeyPressed ends ============
+  1851                           
+  1852                           	signat	_isKeyPressed,89
+  1853                           	global	_VS1838_Process
+  1854                           psect	text444,local,class=CODE,delta=2
+  1855                           global __ptext444
+  1856  014F                     __ptext444:
+  1857                           
+  1858 ;; *************** function _VS1838_Process *****************
+  1859 ;; Defined at:
+  1860 ;;		line 313 in file "main.c"
+  1861 ;; Parameters:    Size  Location     Type
+  1862 ;;		None
+  1863 ;; Auto vars:     Size  Location     Type
+  1864 ;;  Data_H          1    8[BANK0 ] unsigned char 
+  1865 ;;  Data_L          1    7[BANK0 ] unsigned char 
+  1866 ;;  Address_L       1    6[BANK0 ] unsigned char 
+  1867 ;;  Address_H       1    5[BANK0 ] unsigned char 
+  1868 ;; Return value:  Size  Location     Type
+  1869 ;;                  1    wreg      unsigned char 
+  1870 ;; Registers used:
+  1871 ;;		wreg, status,2, status,0
+  1872 ;; Tracked objects:
+  1873 ;;		On entry : 0/0
+  1874 ;;		On exit  : 0/0
+  1875 ;;		Unchanged: 0/0
+  1876 ;; Data sizes:     COMMON   BANK0   BANK1
+  1877 ;;      Params:         0       0       0
+  1878 ;;      Locals:         0       4       0
+  1879 ;;      Temps:          0       5       0
+  1880 ;;      Totals:         0       9       0
+  1881 ;;Total ram usage:        9 bytes
+  1882 ;; Hardware stack levels used:    1
+  1883 ;; Hardware stack levels required when called:    2
+  1884 ;; This function calls:
+  1885 ;;		Nothing
+  1886 ;; This function is called by:
+  1887 ;;		_Control
+  1888 ;; This function uses a non-reentrant model
+  1889 ;;
+  1890                           psect	text444
+  1891                           	file	"main.c"
+  1892                           	line	313
+  1893                           	global	__size_of_VS1838_Process
+  1894  006C                     	__size_of_VS1838_Process	equ	__end_of_VS1838_Process-_VS1838_Process
+  1895                           	
+  1896  014F                     _VS1838_Process:	
+  1897                           	opt	stack 4
+  1898                           ; Regs used in _VS1838_Process: [wreg+status,2+status,0]
+  1899                           	line	317
+  1900                           	
+  1901  014F                     l3505:	
+  1902                           ;main.c: 314: unsigned char Address_H,Address_L;
+  1903                           ;main.c: 315: unsigned char Data_H,Data_L;
+  1904                           ;main.c: 317: if(VS1838_receive_ok==1) {
+  1905  014F  1283               	bcf	status, 5	;RP0=0, select bank0
+  1906  0150  1303               	bcf	status, 6	;RP1=0, select bank0
+  1907  0151  0828               	movf	(_VS1838_receive_ok),w
+  1908  0152  3A01               	xorlw	01h
+  1909  0153  1D03               	skipz
+  1910  0154  2956               	goto	u2621
+  1911  0155  2957               	goto	u2620
+  1912  0156                     u2621:
+  1913  0156  29B8               	goto	l3523
+  1914  0157                     u2620:
+  1915                           	line	318
+  1916                           	
+  1917  0157                     l3507:	
+  1918                           ;main.c: 318: Address_H=VS838_Receive_Data>>24;
+  1919  0157  087A               	movf	(_VS838_Receive_Data),w
+  1920  0158  00AB               	movwf	(??_VS1838_Process+0)+0
+  1921  0159  087B               	movf	(_VS838_Receive_Data+1),w
+  1922  015A  00AC               	movwf	((??_VS1838_Process+0)+0+1)
+  1923  015B  087C               	movf	(_VS838_Receive_Data+2),w
+  1924  015C  00AD               	movwf	((??_VS1838_Process+0)+0+2)
+  1925  015D  087D               	movf	(_VS838_Receive_Data+3),w
+  1926  015E  00AE               	movwf	((??_VS1838_Process+0)+0+3)
+  1927  015F  3018               	movlw	018h
+  1928  0160                     u2635:
+  1929  0160  1003               	clrc
+  1930  0161  0CAE               	rrf	(??_VS1838_Process+0)+3,f
+  1931  0162  0CAD               	rrf	(??_VS1838_Process+0)+2,f
+  1932  0163  0CAC               	rrf	(??_VS1838_Process+0)+1,f
+  1933  0164  0CAB               	rrf	(??_VS1838_Process+0)+0,f
+  1934  0165                     u2630:
+  1935  0165  3EFF               	addlw	-1
+  1936  0166  1D03               	skipz
+  1937  0167  2960               	goto	u2635
+  1938  0168  082B               	movf	0+(??_VS1838_Process+0)+0,w
+  1939  0169  00AF               	movwf	(??_VS1838_Process+4)+0
+  1940  016A  082F               	movf	(??_VS1838_Process+4)+0,w
+  1941  016B  00B0               	movwf	(VS1838_Process@Address_H)
+  1942                           	line	319
+  1943                           ;main.c: 319: Address_L=(VS838_Receive_Data>>16)&0xff;
+  1944  016C  087A               	movf	(_VS838_Receive_Data),w
+  1945  016D  00AB               	movwf	(??_VS1838_Process+0)+0
+  1946  016E  087B               	movf	(_VS838_Receive_Data+1),w
+  1947  016F  00AC               	movwf	((??_VS1838_Process+0)+0+1)
+  1948  0170  087C               	movf	(_VS838_Receive_Data+2),w
+  1949  0171  00AD               	movwf	((??_VS1838_Process+0)+0+2)
+  1950  0172  087D               	movf	(_VS838_Receive_Data+3),w
+  1951  0173  00AE               	movwf	((??_VS1838_Process+0)+0+3)
+  1952  0174  3010               	movlw	010h
+  1953  0175                     u2645:
+  1954  0175  1003               	clrc
+  1955  0176  0CAE               	rrf	(??_VS1838_Process+0)+3,f
+  1956  0177  0CAD               	rrf	(??_VS1838_Process+0)+2,f
+  1957  0178  0CAC               	rrf	(??_VS1838_Process+0)+1,f
+  1958  0179  0CAB               	rrf	(??_VS1838_Process+0)+0,f
+  1959  017A                     u2640:
+  1960  017A  3EFF               	addlw	-1
+  1961  017B  1D03               	skipz
+  1962  017C  2975               	goto	u2645
+  1963  017D  082B               	movf	0+(??_VS1838_Process+0)+0,w
+  1964  017E  00AF               	movwf	(??_VS1838_Process+4)+0
+  1965  017F  082F               	movf	(??_VS1838_Process+4)+0,w
+  1966  0180  00B1               	movwf	(VS1838_Process@Address_L)
+  1967                           	line	320
+  1968                           	
+  1969  0181                     l3509:	
+  1970                           ;main.c: 320: if((Address_H==(unsigned char)~Address_L)) {
+  1971  0181  0931               	comf	(VS1838_Process@Address_L),w
+  1972  0182  0630               	xorwf	(VS1838_Process@Address_H),w
+  1973  0183  1D03               	skipz
+  1974  0184  2986               	goto	u2651
+  1975  0185  2987               	goto	u2650
+  1976  0186                     u2651:
+  1977  0186  29B8               	goto	l3523
+  1978  0187                     u2650:
+  1979                           	line	321
+  1980                           	
+  1981  0187                     l3511:	
+  1982                           ;main.c: 321: Data_H=VS838_Receive_Data>>8;
+  1983  0187  087A               	movf	(_VS838_Receive_Data),w
+  1984  0188  00AB               	movwf	(??_VS1838_Process+0)+0
+  1985  0189  087B               	movf	(_VS838_Receive_Data+1),w
+  1986  018A  00AC               	movwf	((??_VS1838_Process+0)+0+1)
+  1987  018B  087C               	movf	(_VS838_Receive_Data+2),w
+  1988  018C  00AD               	movwf	((??_VS1838_Process+0)+0+2)
+  1989  018D  087D               	movf	(_VS838_Receive_Data+3),w
+  1990  018E  00AE               	movwf	((??_VS1838_Process+0)+0+3)
+  1991  018F  3008               	movlw	08h
+  1992  0190                     u2665:
+  1993  0190  1003               	clrc
+  1994  0191  0CAE               	rrf	(??_VS1838_Process+0)+3,f
+  1995  0192  0CAD               	rrf	(??_VS1838_Process+0)+2,f
+  1996  0193  0CAC               	rrf	(??_VS1838_Process+0)+1,f
+  1997  0194  0CAB               	rrf	(??_VS1838_Process+0)+0,f
+  1998  0195                     u2660:
+  1999  0195  3EFF               	addlw	-1
+  2000  0196  1D03               	skipz
+  2001  0197  2990               	goto	u2665
+  2002  0198  082B               	movf	0+(??_VS1838_Process+0)+0,w
+  2003  0199  00AF               	movwf	(??_VS1838_Process+4)+0
+  2004  019A  082F               	movf	(??_VS1838_Process+4)+0,w
+  2005  019B  00B3               	movwf	(VS1838_Process@Data_H)
+  2006                           	line	322
+  2007                           	
+  2008  019C                     l3513:	
+  2009                           ;main.c: 322: Data_L=VS838_Receive_Data;
+  2010  019C  087A               	movf	(_VS838_Receive_Data),w
+  2011  019D  00AB               	movwf	(??_VS1838_Process+0)+0
+  2012  019E  082B               	movf	(??_VS1838_Process+0)+0,w
+  2013  019F  00B2               	movwf	(VS1838_Process@Data_L)
+  2014                           	line	323
+  2015                           	
+  2016  01A0                     l3515:	
+  2017                           ;main.c: 323: if(Data_H==(unsigned char)~Data_L) {
+  2018  01A0  0932               	comf	(VS1838_Process@Data_L),w
+  2019  01A1  0633               	xorwf	(VS1838_Process@Data_H),w
+  2020  01A2  1D03               	skipz
+  2021  01A3  29A5               	goto	u2671
+  2022  01A4  29A6               	goto	u2670
+  2023  01A5                     u2671:
+  2024  01A5  29B8               	goto	l3523
+  2025  01A6                     u2670:
+  2026                           	line	324
+  2027                           	
+  2028  01A6                     l3517:	
+  2029                           ;main.c: 324: VS1838_Data=Data_H;
+  2030  01A6  0833               	movf	(VS1838_Process@Data_H),w
+  2031  01A7  00AB               	movwf	(??_VS1838_Process+0)+0
+  2032  01A8  082B               	movf	(??_VS1838_Process+0)+0,w
+  2033  01A9  00A5               	movwf	(_VS1838_Data)
+  2034                           	line	325
+  2035                           	
+  2036  01AA                     l3519:	
+  2037                           ;main.c: 325: VS1838_Status=0;
+  2038  01AA  01A7               	clrf	(_VS1838_Status)
+  2039                           	line	326
+  2040                           ;main.c: 326: VS838_Receive_Data=0;
+  2041  01AB  3000               	movlw	0
+  2042  01AC  00FD               	movwf	(_VS838_Receive_Data+3)
+  2043  01AD  3000               	movlw	0
+  2044  01AE  00FC               	movwf	(_VS838_Receive_Data+2)
+  2045  01AF  3000               	movlw	0
+  2046  01B0  00FB               	movwf	(_VS838_Receive_Data+1)
+  2047  01B1  3000               	movlw	0
+  2048  01B2  00FA               	movwf	(_VS838_Receive_Data)
+  2049                           
+  2050                           	line	327
+  2051                           ;main.c: 327: return 1;
+  2052  01B3  3001               	movlw	(01h)
+  2053  01B4  29BA               	goto	l1164
+  2054                           	
+  2055  01B5                     l3521:	
+  2056  01B5  29BA               	goto	l1164
+  2057                           	line	328
+  2058                           	
+  2059  01B6                     l1163:	
+  2060  01B6  29B8               	goto	l3523
+  2061                           	line	329
+  2062                           	
+  2063  01B7                     l1162:	
+  2064  01B7  29B8               	goto	l3523
+  2065                           	line	330
+  2066                           	
+  2067  01B8                     l1161:	
+  2068                           	line	331
+  2069                           	
+  2070  01B8                     l3523:	
+  2071                           ;main.c: 328: }
+  2072                           ;main.c: 329: }
+  2073                           ;main.c: 330: }
+  2074                           ;main.c: 331: return 0;
+  2075  01B8  3000               	movlw	(0)
+  2076  01B9  29BA               	goto	l1164
+  2077                           	
+  2078  01BA                     l3525:	
+  2079                           	line	332
+  2080                           	
+  2081  01BA                     l1164:	
+  2082  01BA  0008               	return
+  2083                           	opt stack 0
+  2084                           GLOBAL	__end_of_VS1838_Process
+  2085  01BB                     	__end_of_VS1838_Process:
+  2086 ;; =============== function _VS1838_Process ends ============
+  2087                           
+  2088                           	signat	_VS1838_Process,89
+  2089                           	global	_Timer1_Init
+  2090                           psect	text445,local,class=CODE,delta=2
+  2091                           global __ptext445
+  2092  02D7                     __ptext445:
+  2093                           
+  2094 ;; *************** function _Timer1_Init *****************
+  2095 ;; Defined at:
+  2096 ;;		line 232 in file "main.c"
+  2097 ;; Parameters:    Size  Location     Type
+  2098 ;;		None
+  2099 ;; Auto vars:     Size  Location     Type
+  2100 ;;		None
+  2101 ;; Return value:  Size  Location     Type
+  2102 ;;		None               void
+  2103 ;; Registers used:
+  2104 ;;		wreg, status,2
+  2105 ;; Tracked objects:
+  2106 ;;		On entry : 0/0
+  2107 ;;		On exit  : 0/0
+  2108 ;;		Unchanged: 0/0
+  2109 ;; Data sizes:     COMMON   BANK0   BANK1
+  2110 ;;      Params:         0       0       0
+  2111 ;;      Locals:         0       0       0
+  2112 ;;      Temps:          0       0       0
+  2113 ;;      Totals:         0       0       0
+  2114 ;;Total ram usage:        0 bytes
+  2115 ;; Hardware stack levels used:    1
+  2116 ;; Hardware stack levels required when called:    2
+  2117 ;; This function calls:
+  2118 ;;		Nothing
+  2119 ;; This function is called by:
+  2120 ;;		_main
+  2121 ;; This function uses a non-reentrant model
+  2122 ;;
+  2123                           psect	text445
+  2124                           	file	"main.c"
+  2125                           	line	232
+  2126                           	global	__size_of_Timer1_Init
+  2127  0019                     	__size_of_Timer1_Init	equ	__end_of_Timer1_Init-_Timer1_Init
+  2128                           	
+  2129  02D7                     _Timer1_Init:	
+  2130                           	opt	stack 5
+  2131                           ; Regs used in _Timer1_Init: [wreg+status,2]
+  2132                           	line	234
+  2133                           	
+  2134  02D7                     l3417:	
+  2135                           ;main.c: 234: T1CKPS1 = 1;
+  2136  02D7  1283               	bcf	status, 5	;RP0=0, select bank0
+  2137  02D8  1303               	bcf	status, 6	;RP1=0, select bank0
+  2138  02D9  1690               	bsf	(133/8),(133)&7
+  2139                           	line	235
+  2140                           ;main.c: 235: T1CKPS0 = 1;
+  2141  02DA  1610               	bsf	(132/8),(132)&7
+  2142                           	line	236
+  2143                           ;main.c: 236: T1OSCEN = 0;
+  2144  02DB  1190               	bcf	(131/8),(131)&7
+  2145                           	line	237
+  2146                           	
+  2147  02DC                     l3419:	
+  2148                           ;main.c: 237: CCP1CON = 0x05;
+  2149  02DC  3005               	movlw	(05h)
+  2150  02DD  0095               	movwf	(21)	;volatile
+  2151                           	line	238
+  2152                           	
+  2153  02DE                     l3421:	
+  2154                           ;main.c: 238: TMR1CS = 0X00;
+  2155  02DE  1090               	bcf	(129/8),(129)&7
+  2156                           	line	240
+  2157                           	
+  2158  02DF                     l3423:	
+  2159                           ;main.c: 240: PEIE = 1;
+  2160  02DF  170B               	bsf	(94/8),(94)&7
+  2161                           	line	241
+  2162                           	
+  2163  02E0                     l3425:	
+  2164                           ;main.c: 241: CCP1IE=1;
+  2165  02E0  1683               	bsf	status, 5	;RP0=1, select bank1
+  2166  02E1  1303               	bcf	status, 6	;RP1=0, select bank1
+  2167  02E2  140D               	bsf	(1128/8)^080h,(1128)&7
+  2168                           	line	242
+  2169                           	
+  2170  02E3                     l3427:	
+  2171                           ;main.c: 242: CCP1IF=0;
+  2172  02E3  1283               	bcf	status, 5	;RP0=0, select bank0
+  2173  02E4  1303               	bcf	status, 6	;RP1=0, select bank0
+  2174  02E5  100D               	bcf	(104/8),(104)&7
+  2175                           	line	243
+  2176                           	
+  2177  02E6                     l3429:	
+  2178                           ;main.c: 243: TRISC5 = 1;
+  2179  02E6  1683               	bsf	status, 5	;RP0=1, select bank1
+  2180  02E7  1303               	bcf	status, 6	;RP1=0, select bank1
+  2181  02E8  1687               	bsf	(1085/8)^080h,(1085)&7
+  2182                           	line	244
+  2183                           	
+  2184  02E9                     l3431:	
+  2185                           ;main.c: 244: TMR1H=0;
+  2186  02E9  1283               	bcf	status, 5	;RP0=0, select bank0
+  2187  02EA  1303               	bcf	status, 6	;RP1=0, select bank0
+  2188  02EB  018F               	clrf	(15)	;volatile
+  2189                           	line	245
+  2190                           	
+  2191  02EC                     l3433:	
+  2192                           ;main.c: 245: TMR1L=0;
+  2193  02EC  018E               	clrf	(14)	;volatile
+  2194                           	line	246
+  2195                           	
+  2196  02ED                     l3435:	
+  2197                           ;main.c: 246: GIE=1;
+  2198  02ED  178B               	bsf	(95/8),(95)&7
+  2199                           	line	247
+  2200                           	
+  2201  02EE                     l3437:	
+  2202                           ;main.c: 247: TMR1ON = 1;
+  2203  02EE  1410               	bsf	(128/8),(128)&7
+  2204                           	line	248
+  2205                           	
+  2206  02EF                     l1135:	
+  2207  02EF  0008               	return
+  2208                           	opt stack 0
+  2209                           GLOBAL	__end_of_Timer1_Init
+  2210  02F0                     	__end_of_Timer1_Init:
+  2211 ;; =============== function _Timer1_Init ends ============
+  2212                           
+  2213                           	signat	_Timer1_Init,88
+  2214                           	global	_GPIO_Init
+  2215                           psect	text446,local,class=CODE,delta=2
+  2216                           global __ptext446
+  2217  01BB                     __ptext446:
+  2218                           
+  2219 ;; *************** function _GPIO_Init *****************
+  2220 ;; Defined at:
+  2221 ;;		line 126 in file "main.c"
+  2222 ;; Parameters:    Size  Location     Type
+  2223 ;;		None
+  2224 ;; Auto vars:     Size  Location     Type
+  2225 ;;		None
+  2226 ;; Return value:  Size  Location     Type
+  2227 ;;		None               void
+  2228 ;; Registers used:
+  2229 ;;		None
+  2230 ;; Tracked objects:
+  2231 ;;		On entry : 0/0
+  2232 ;;		On exit  : 0/0
+  2233 ;;		Unchanged: 0/0
+  2234 ;; Data sizes:     COMMON   BANK0   BANK1
+  2235 ;;      Params:         0       0       0
+  2236 ;;      Locals:         0       0       0
+  2237 ;;      Temps:          0       0       0
+  2238 ;;      Totals:         0       0       0
+  2239 ;;Total ram usage:        0 bytes
+  2240 ;; Hardware stack levels used:    1
+  2241 ;; Hardware stack levels required when called:    2
+  2242 ;; This function calls:
+  2243 ;;		Nothing
+  2244 ;; This function is called by:
+  2245 ;;		_main
+  2246 ;; This function uses a non-reentrant model
+  2247 ;;
+  2248                           psect	text446
+  2249                           	file	"main.c"
+  2250                           	line	126
+  2251                           	global	__size_of_GPIO_Init
+  2252  0032                     	__size_of_GPIO_Init	equ	__end_of_GPIO_Init-_GPIO_Init
+  2253                           	
+  2254  01BB                     _GPIO_Init:	
+  2255                           	opt	stack 5
+  2256                           ; Regs used in _GPIO_Init: []
+  2257                           	line	128
+  2258                           	
+  2259  01BB                     l3415:	
+  2260                           ;main.c: 128: TRISA0=0;
+  2261  01BB  1683               	bsf	status, 5	;RP0=1, select bank1
+  2262  01BC  1303               	bcf	status, 6	;RP1=0, select bank1
+  2263  01BD  1005               	bcf	(1064/8)^080h,(1064)&7
+  2264                           	line	129
+  2265                           ;main.c: 129: TRISA1=0;
+  2266  01BE  1085               	bcf	(1065/8)^080h,(1065)&7
+  2267                           	line	130
+  2268                           ;main.c: 130: TRISA2=0;
+  2269  01BF  1105               	bcf	(1066/8)^080h,(1066)&7
+  2270                           	line	131
+  2271                           ;main.c: 131: TRISA3=0;
+  2272  01C0  1185               	bcf	(1067/8)^080h,(1067)&7
+  2273                           	line	132
+  2274                           ;main.c: 132: TRISA4=0;
+  2275  01C1  1205               	bcf	(1068/8)^080h,(1068)&7
+  2276                           	line	133
+  2277                           ;main.c: 133: TRISA5=1;
+  2278  01C2  1685               	bsf	(1069/8)^080h,(1069)&7
+  2279                           	line	134
+  2280                           ;main.c: 134: TRISA6=0;
+  2281  01C3  1305               	bcf	(1070/8)^080h,(1070)&7
+  2282                           	line	135
+  2283                           ;main.c: 135: TRISA7=0;
+  2284  01C4  1385               	bcf	(1071/8)^080h,(1071)&7
+  2285                           	line	137
+  2286                           ;main.c: 137: TRISC0=1;
+  2287  01C5  1407               	bsf	(1080/8)^080h,(1080)&7
+  2288                           	line	138
+  2289                           ;main.c: 138: TRISC1=1;
+  2290  01C6  1487               	bsf	(1081/8)^080h,(1081)&7
+  2291                           	line	139
+  2292                           ;main.c: 139: TRISC2=0;
+  2293  01C7  1107               	bcf	(1082/8)^080h,(1082)&7
+  2294                           	line	140
+  2295                           ;main.c: 140: TRISC3=0;
+  2296  01C8  1187               	bcf	(1083/8)^080h,(1083)&7
+  2297                           	line	141
+  2298                           ;main.c: 141: TRISC4=0;
+  2299  01C9  1207               	bcf	(1084/8)^080h,(1084)&7
+  2300                           	line	142
+  2301                           ;main.c: 142: TRISC5=0;
+  2302  01CA  1287               	bcf	(1085/8)^080h,(1085)&7
+  2303                           	line	144
+  2304                           ;main.c: 144: CM0=1;
+  2305  01CB  1283               	bcf	status, 5	;RP0=0, select bank0
+  2306  01CC  1303               	bcf	status, 6	;RP1=0, select bank0
+  2307  01CD  1419               	bsf	(200/8),(200)&7
+  2308                           	line	145
+  2309                           ;main.c: 145: CM1=1;
+  2310  01CE  1499               	bsf	(201/8),(201)&7
+  2311                           	line	146
+  2312                           ;main.c: 146: CM2=1;
+  2313  01CF  1519               	bsf	(202/8),(202)&7
+  2314                           	line	150
+  2315                           ;main.c: 150: ANSEL0=0;
+  2316  01D0  1683               	bsf	status, 5	;RP0=1, select bank1
+  2317  01D1  1303               	bcf	status, 6	;RP1=0, select bank1
+  2318  01D2  1011               	bcf	(1160/8)^080h,(1160)&7
+  2319                           	line	151
+  2320                           ;main.c: 151: ANSEL1=0;
+  2321  01D3  1091               	bcf	(1161/8)^080h,(1161)&7
+  2322                           	line	152
+  2323                           ;main.c: 152: ANSEL2=0;
+  2324  01D4  1111               	bcf	(1162/8)^080h,(1162)&7
+  2325                           	line	153
+  2326                           ;main.c: 153: ANSEL3=0;
+  2327  01D5  1191               	bcf	(1163/8)^080h,(1163)&7
+  2328                           	line	154
+  2329                           ;main.c: 154: ANSEL4=0;
+  2330  01D6  1211               	bcf	(1164/8)^080h,(1164)&7
+  2331                           	line	155
+  2332                           ;main.c: 155: ANSEL5=0;
+  2333  01D7  1291               	bcf	(1165/8)^080h,(1165)&7
+  2334                           	line	156
+  2335                           ;main.c: 156: ANSEL6=0;
+  2336  01D8  1311               	bcf	(1166/8)^080h,(1166)&7
+  2337                           	line	157
+  2338                           ;main.c: 157: ANSEL7=0;
+  2339  01D9  1391               	bcf	(1167/8)^080h,(1167)&7
+  2340                           	line	159
+  2341                           ;main.c: 159: WPUA0=1;
+  2342  01DA  1415               	bsf	(1192/8)^080h,(1192)&7
+  2343                           	line	160
+  2344                           ;main.c: 160: WPUA1=1;
+  2345  01DB  1495               	bsf	(1193/8)^080h,(1193)&7
+  2346                           	line	161
+  2347                           ;main.c: 161: WPUA2=1;
+  2348  01DC  1515               	bsf	(1194/8)^080h,(1194)&7
+  2349                           	line	162
+  2350                           ;main.c: 162: WPUA3=1;
+  2351  01DD  1595               	bsf	(1195/8)^080h,(1195)&7
+  2352                           	line	163
+  2353                           ;main.c: 163: WPUA4=1;
+  2354  01DE  1615               	bsf	(1196/8)^080h,(1196)&7
+  2355                           	line	164
+  2356                           ;main.c: 164: WPUA5=1;
+  2357  01DF  1695               	bsf	(1197/8)^080h,(1197)&7
+  2358                           	line	165
+  2359                           ;main.c: 165: WPUA6=1;
+  2360  01E0  1715               	bsf	(1198/8)^080h,(1198)&7
+  2361                           	line	166
+  2362                           ;main.c: 166: WPUA7=1;
+  2363  01E1  1795               	bsf	(1199/8)^080h,(1199)&7
+  2364                           	line	168
+  2365                           ;main.c: 168: WPUC0=1;
+  2366  01E2  1408               	bsf	(1088/8)^080h,(1088)&7
+  2367                           	line	169
+  2368                           ;main.c: 169: WPUC1=1;
+  2369  01E3  1488               	bsf	(1089/8)^080h,(1089)&7
+  2370                           	line	170
+  2371                           ;main.c: 170: WPUC2=0;
+  2372  01E4  1108               	bcf	(1090/8)^080h,(1090)&7
+  2373                           	line	171
+  2374                           ;main.c: 171: WPUC3=0;
+  2375  01E5  1188               	bcf	(1091/8)^080h,(1091)&7
+  2376                           	line	172
+  2377                           ;main.c: 172: WPUC4=0;
+  2378  01E6  1208               	bcf	(1092/8)^080h,(1092)&7
+  2379                           	line	173
+  2380                           ;main.c: 173: WPUC5=0;
+  2381  01E7  1288               	bcf	(1093/8)^080h,(1093)&7
+  2382                           	line	175
+  2383                           ;main.c: 175: WPDA4=0;
+  2384  01E8  1209               	bcf	(1100/8)^080h,(1100)&7
+  2385                           	line	176
+  2386                           ;main.c: 176: WPDC1=0;
+  2387  01E9  1189               	bcf	(1099/8)^080h,(1099)&7
+  2388                           	line	177
+  2389                           ;main.c: 177: WPDC2=0;
+  2390  01EA  1109               	bcf	(1098/8)^080h,(1098)&7
+  2391                           	line	178
+  2392                           ;main.c: 178: WPDC3=0;
+  2393  01EB  1089               	bcf	(1097/8)^080h,(1097)&7
+  2394                           	line	179
+  2395                           	
+  2396  01EC                     l1125:	
+  2397  01EC  0008               	return
+  2398                           	opt stack 0
+  2399                           GLOBAL	__end_of_GPIO_Init
+  2400  01ED                     	__end_of_GPIO_Init:
+  2401 ;; =============== function _GPIO_Init ends ============
+  2402                           
+  2403                           	signat	_GPIO_Init,88
+  2404                           	global	_System_init
+  2405                           psect	text447,local,class=CODE,delta=2
+  2406                           global __ptext447
+  2407  0324                     __ptext447:
+  2408                           
+  2409 ;; *************** function _System_init *****************
+  2410 ;; Defined at:
+  2411 ;;		line 113 in file "main.c"
+  2412 ;; Parameters:    Size  Location     Type
+  2413 ;;		None
+  2414 ;; Auto vars:     Size  Location     Type
+  2415 ;;		None
+  2416 ;; Return value:  Size  Location     Type
+  2417 ;;		None               void
+  2418 ;; Registers used:
+  2419 ;;		wreg, status,2
+  2420 ;; Tracked objects:
+  2421 ;;		On entry : 0/0
+  2422 ;;		On exit  : 0/0
+  2423 ;;		Unchanged: 0/0
+  2424 ;; Data sizes:     COMMON   BANK0   BANK1
+  2425 ;;      Params:         0       0       0
+  2426 ;;      Locals:         0       0       0
+  2427 ;;      Temps:          0       0       0
+  2428 ;;      Totals:         0       0       0
+  2429 ;;Total ram usage:        0 bytes
+  2430 ;; Hardware stack levels used:    1
+  2431 ;; Hardware stack levels required when called:    2
+  2432 ;; This function calls:
+  2433 ;;		Nothing
+  2434 ;; This function is called by:
+  2435 ;;		_main
+  2436 ;; This function uses a non-reentrant model
+  2437 ;;
+  2438                           psect	text447
+  2439                           	file	"main.c"
+  2440                           	line	113
+  2441                           	global	__size_of_System_init
+  2442  000A                     	__size_of_System_init	equ	__end_of_System_init-_System_init
+  2443                           	
+  2444  0324                     _System_init:	
+  2445                           	opt	stack 5
+  2446                           ; Regs used in _System_init: [wreg+status,2]
+  2447                           	line	114
+  2448                           	
+  2449  0324                     l3409:	
+  2450                           ;main.c: 114: OPTION = 0x00;
+  2451  0324  1683               	bsf	status, 5	;RP0=1, select bank1
+  2452  0325  1303               	bcf	status, 6	;RP1=0, select bank1
+  2453  0326  0181               	clrf	(129)^080h	;volatile
+  2454                           	line	115
+  2455                           	
+  2456  0327                     l3411:	
+  2457                           ;main.c: 115: OSCCON = 0x70;
+  2458  0327  3070               	movlw	(070h)
+  2459  0328  008F               	movwf	(143)^080h	;volatile
+  2460                           	line	116
+  2461                           	
+  2462  0329                     l3413:	
+  2463                           ;main.c: 116: WDTCON = 0x1F;
+  2464  0329  301F               	movlw	(01Fh)
+  2465  032A  1283               	bcf	status, 5	;RP0=0, select bank0
+  2466  032B  1303               	bcf	status, 6	;RP1=0, select bank0
+  2467  032C  0098               	movwf	(24)	;volatile
+  2468                           	line	117
+  2469                           	
+  2470  032D                     l1122:	
+  2471  032D  0008               	return
+  2472                           	opt stack 0
+  2473                           GLOBAL	__end_of_System_init
+  2474  032E                     	__end_of_System_init:
+  2475 ;; =============== function _System_init ends ============
+  2476                           
+  2477                           	signat	_System_init,88
+  2478                           	global	_ISR
+  2479                           psect	text448,local,class=CODE,delta=2
+  2480                           global __ptext448
+  2481  021E                     __ptext448:
+  2482                           
+  2483 ;; *************** function _ISR *****************
+  2484 ;; Defined at:
+  2485 ;;		line 188 in file "main.c"
+  2486 ;; Parameters:    Size  Location     Type
+  2487 ;;		None
+  2488 ;; Auto vars:     Size  Location     Type
+  2489 ;;		None
+  2490 ;; Return value:  Size  Location     Type
+  2491 ;;		None               void
+  2492 ;; Registers used:
+  2493 ;;		wreg, fsr0l, fsr0h, status,2, status,0, pclath, cstack
+  2494 ;; Tracked objects:
+  2495 ;;		On entry : 0/0
+  2496 ;;		On exit  : 0/0
+  2497 ;;		Unchanged: 0/0
+  2498 ;; Data sizes:     COMMON   BANK0   BANK1
+  2499 ;;      Params:         0       0       0
+  2500 ;;      Locals:         0       0       0
+  2501 ;;      Temps:          4       0       0
+  2502 ;;      Totals:         4       0       0
+  2503 ;;Total ram usage:        4 bytes
+  2504 ;; Hardware stack levels used:    1
+  2505 ;; Hardware stack levels required when called:    1
+  2506 ;; This function calls:
+  2507 ;;		_GetCCP1Value
+  2508 ;;		_VS1838ReceiveHandle
+  2509 ;;		_Clean_countReg
+  2510 ;; This function is called by:
+  2511 ;;		Interrupt level 1
+  2512 ;; This function uses a non-reentrant model
+  2513 ;;
+  2514                           psect	text448
+  2515                           	file	"main.c"
+  2516                           	line	188
+  2517                           	global	__size_of_ISR
+  2518  002F                     	__size_of_ISR	equ	__end_of_ISR-_ISR
+  2519                           	
+  2520  021E                     _ISR:	
+  2521                           	opt	stack 3
+  2522                           ; Regs used in _ISR: [wreg-fsr0h+status,2+status,0+pclath+cstack]
+  2523                           psect	intentry,class=CODE,delta=2
+  2524                           global __pintentry
+  2525  0004                     __pintentry:
+  2526                           global interrupt_function
+  2527  0004                     interrupt_function:
+  2528                           	global saved_w
+  2529  007E                     	saved_w	set	btemp+0
+  2530  0004  00FE               	movwf	saved_w
+  2531  0005  0E03               	swapf	status,w
+  2532  0006  00F6               	movwf	(??_ISR+0)
+  2533  0007  0804               	movf	fsr0,w
+  2534  0008  00F7               	movwf	(??_ISR+1)
+  2535  0009  080A               	movf	pclath,w
+  2536  000A  00F8               	movwf	(??_ISR+2)
+  2537  000B  1283               	bcf	status, 5	;RP0=0, select bank0
+  2538  000C  1303               	bcf	status, 6	;RP1=0, select bank0
+  2539  000D  087F               	movf	btemp+1,w
+  2540  000E  00F9               	movwf	(??_ISR+3)
+  2541  000F  2A1E               	ljmp	_ISR
+  2542                           psect	text448
+  2543                           	line	189
+  2544                           	
+  2545  021E                     i1l3439:	
+  2546                           ;main.c: 189: if(CCP1IE&CCP1IF == 1) {
+  2547  021E  3001               	movlw	1
+  2548  021F  1683               	bsf	status, 5	;RP0=1, select bank1
+  2549  0220  1303               	bcf	status, 6	;RP1=0, select bank1
+  2550  0221  1C0D               	btfss	(1128/8)^080h,(1128)&7
+  2551  0222  3900               	andlw	0
+  2552  0223  1283               	bcf	status, 5	;RP0=0, select bank0
+  2553  0224  1303               	bcf	status, 6	;RP1=0, select bank0
+  2554  0225  1C0D               	btfss	(104/8),(104)&7
+  2555  0226  3900               	andlw	0
+  2556  0227  3800               	iorlw	0
+  2557  0228  1903               	skipnz
+  2558  0229  2A2B               	goto	u252_21
+  2559  022A  2A2C               	goto	u252_20
+  2560  022B                     u252_21:
+  2561  022B  2A40               	goto	i1l1129
+  2562  022C                     u252_20:
+  2563                           	line	190
+  2564                           	
+  2565  022C                     i1l3441:	
+  2566                           ;main.c: 190: CCP1IF = 0;
+  2567  022C  100D               	bcf	(104/8),(104)&7
+  2568                           	line	191
+  2569                           	
+  2570  022D                     i1l3443:	
+  2571                           ;main.c: 191: Cycle_CCPR = GetCCP1Value();
+  2572  022D  22B8               	fcall	_GetCCP1Value
+  2573  022E  0871               	movf	(1+(?_GetCCP1Value)),w
+  2574  022F  1283               	bcf	status, 5	;RP0=0, select bank0
+  2575  0230  1303               	bcf	status, 6	;RP1=0, select bank0
+  2576  0231  01A3               	clrf	(_Cycle_CCPR+1)
+  2577  0232  07A3               	addwf	(_Cycle_CCPR+1)
+  2578  0233  0870               	movf	(0+(?_GetCCP1Value)),w
+  2579  0234  01A2               	clrf	(_Cycle_CCPR)
+  2580  0235  07A2               	addwf	(_Cycle_CCPR)
+  2581                           
+  2582                           	line	192
+  2583                           	
+  2584  0236                     i1l3445:	
+  2585                           ;main.c: 192: vs_times=0;
+  2586  0236  01AA               	clrf	(_vs_times)
+  2587                           	line	193
+  2588                           	
+  2589  0237                     i1l3447:	
+  2590                           ;main.c: 193: VS1838ReceiveHandle(Cycle_CCPR);
+  2591  0237  0823               	movf	(_Cycle_CCPR+1),w
+  2592  0238  01F1               	clrf	(?_VS1838ReceiveHandle+1)
+  2593  0239  07F1               	addwf	(?_VS1838ReceiveHandle+1)
+  2594  023A  0822               	movf	(_Cycle_CCPR),w
+  2595  023B  01F0               	clrf	(?_VS1838ReceiveHandle)
+  2596  023C  07F0               	addwf	(?_VS1838ReceiveHandle)
+  2597                           
+  2598  023D  2011               	fcall	_VS1838ReceiveHandle
+  2599                           	line	194
+  2600                           	
+  2601  023E                     i1l3449:	
+  2602                           ;main.c: 194: Clean_countReg();
+  2603  023E  2336               	fcall	_Clean_countReg
+  2604  023F  2A40               	goto	i1l1129
+  2605                           	line	195
+  2606                           	
+  2607  0240                     i1l1128:	
+  2608                           	line	196
+  2609                           	
+  2610  0240                     i1l1129:	
+  2611  0240  0879               	movf	(??_ISR+3),w
+  2612  0241  1283               	bcf	status, 5	;RP0=0, select bank0
+  2613  0242  1303               	bcf	status, 6	;RP1=0, select bank0
+  2614  0243  00FF               	movwf	btemp+1
+  2615  0244  0878               	movf	(??_ISR+2),w
+  2616  0245  008A               	movwf	pclath
+  2617  0246  0877               	movf	(??_ISR+1),w
+  2618  0247  0084               	movwf	fsr0
+  2619  0248  0E76               	swapf	(??_ISR+0)^0FFFFFF80h,w
+  2620  0249  0083               	movwf	status
+  2621  024A  0EFE               	swapf	saved_w,f
+  2622  024B  0E7E               	swapf	saved_w,w
+  2623  024C  0009               	retfie
+  2624                           	opt stack 0
+  2625                           GLOBAL	__end_of_ISR
+  2626  024D                     	__end_of_ISR:
+  2627 ;; =============== function _ISR ends ============
+  2628                           
+  2629                           	signat	_ISR,88
+  2630                           	global	_Clean_countReg
+  2631                           psect	text449,local,class=CODE,delta=2
+  2632                           global __ptext449
+  2633  0336                     __ptext449:
+  2634                           
+  2635 ;; *************** function _Clean_countReg *****************
+  2636 ;; Defined at:
+  2637 ;;		line 261 in file "main.c"
+  2638 ;; Parameters:    Size  Location     Type
+  2639 ;;		None
+  2640 ;; Auto vars:     Size  Location     Type
+  2641 ;;		None
+  2642 ;; Return value:  Size  Location     Type
+  2643 ;;		None               void
+  2644 ;; Registers used:
+  2645 ;;		status,2
+  2646 ;; Tracked objects:
+  2647 ;;		On entry : 0/0
+  2648 ;;		On exit  : 0/0
+  2649 ;;		Unchanged: 0/0
+  2650 ;; Data sizes:     COMMON   BANK0   BANK1
+  2651 ;;      Params:         0       0       0
+  2652 ;;      Locals:         0       0       0
+  2653 ;;      Temps:          0       0       0
+  2654 ;;      Totals:         0       0       0
+  2655 ;;Total ram usage:        0 bytes
+  2656 ;; Hardware stack levels used:    1
+  2657 ;; This function calls:
+  2658 ;;		Nothing
+  2659 ;; This function is called by:
+  2660 ;;		_ISR
+  2661 ;; This function uses a non-reentrant model
+  2662 ;;
+  2663                           psect	text449
+  2664                           	file	"main.c"
+  2665                           	line	261
+  2666                           	global	__size_of_Clean_countReg
+  2667  0005                     	__size_of_Clean_countReg	equ	__end_of_Clean_countReg-_Clean_countReg
+  2668                           	
+  2669  0336                     _Clean_countReg:	
+  2670                           	opt	stack 3
+  2671                           ; Regs used in _Clean_countReg: [status,2]
+  2672                           	line	262
+  2673                           	
+  2674  0336                     i1l3503:	
+  2675                           ;main.c: 262: TMR1H=0;
+  2676  0336  1283               	bcf	status, 5	;RP0=0, select bank0
+  2677  0337  1303               	bcf	status, 6	;RP1=0, select bank0
+  2678  0338  018F               	clrf	(15)	;volatile
+  2679                           	line	263
+  2680                           ;main.c: 263: TMR1L=0;
+  2681  0339  018E               	clrf	(14)	;volatile
+  2682                           	line	264
+  2683                           	
+  2684  033A                     i1l1141:	
+  2685  033A  0008               	return
+  2686                           	opt stack 0
+  2687                           GLOBAL	__end_of_Clean_countReg
+  2688  033B                     	__end_of_Clean_countReg:
+  2689 ;; =============== function _Clean_countReg ends ============
+  2690                           
+  2691                           	signat	_Clean_countReg,88
+  2692                           	global	_VS1838ReceiveHandle
+  2693                           psect	text450,local,class=CODE,delta=2
+  2694                           global __ptext450
+  2695  0011                     __ptext450:
+  2696                           
+  2697 ;; *************** function _VS1838ReceiveHandle *****************
+  2698 ;; Defined at:
+  2699 ;;		line 273 in file "main.c"
+  2700 ;; Parameters:    Size  Location     Type
+  2701 ;;  capdata         2    0[COMMON] unsigned int 
+  2702 ;; Auto vars:     Size  Location     Type
+  2703 ;;		None
+  2704 ;; Return value:  Size  Location     Type
+  2705 ;;		None               void
+  2706 ;; Registers used:
+  2707 ;;		wreg, fsr0l, fsr0h, status,2, status,0
+  2708 ;; Tracked objects:
+  2709 ;;		On entry : 0/0
+  2710 ;;		On exit  : 0/0
+  2711 ;;		Unchanged: 0/0
+  2712 ;; Data sizes:     COMMON   BANK0   BANK1
+  2713 ;;      Params:         2       0       0
+  2714 ;;      Locals:         0       0       0
+  2715 ;;      Temps:          4       0       0
+  2716 ;;      Totals:         6       0       0
+  2717 ;;Total ram usage:        6 bytes
+  2718 ;; Hardware stack levels used:    1
+  2719 ;; This function calls:
+  2720 ;;		Nothing
+  2721 ;; This function is called by:
+  2722 ;;		_ISR
+  2723 ;; This function uses a non-reentrant model
+  2724 ;;
+  2725                           psect	text450
+  2726                           	file	"main.c"
+  2727                           	line	273
+  2728                           	global	__size_of_VS1838ReceiveHandle
+  2729  00B4                     	__size_of_VS1838ReceiveHandle	equ	__end_of_VS1838ReceiveHandle-_VS1838ReceiveHandle
+  2730                           	
+  2731  0011                     _VS1838ReceiveHandle:	
+  2732                           	opt	stack 3
+  2733                           ; Regs used in _VS1838ReceiveHandle: [wreg-fsr0h+status,2+status,0]
+  2734                           	line	274
+  2735                           	
+  2736  0011                     i1l3463:	
+  2737                           ;main.c: 274: switch(VS1838_Status) {
+  2738  0011  28BA               	goto	i1l3501
+  2739                           	line	275
+  2740                           ;main.c: 275: case 0:
+  2741                           	
+  2742  0012                     i1l1145:	
+  2743                           	line	276
+  2744                           	
+  2745  0012                     i1l3465:	
+  2746                           ;main.c: 276: if((capdata >= 3000)&&(capdata <= 7000)) {
+  2747  0012  300B               	movlw	high(0BB8h)
+  2748  0013  0271               	subwf	(VS1838ReceiveHandle@capdata+1),w
+  2749  0014  30B8               	movlw	low(0BB8h)
+  2750  0015  1903               	skipnz
+  2751  0016  0270               	subwf	(VS1838ReceiveHandle@capdata),w
+  2752  0017  1C03               	skipc
+  2753  0018  281A               	goto	u253_21
+  2754  0019  281B               	goto	u253_20
+  2755  001A                     u253_21:
+  2756  001A  282A               	goto	i1l1146
+  2757  001B                     u253_20:
+  2758                           	
+  2759  001B                     i1l3467:	
+  2760  001B  301B               	movlw	high(01B59h)
+  2761  001C  0271               	subwf	(VS1838ReceiveHandle@capdata+1),w
+  2762  001D  3059               	movlw	low(01B59h)
+  2763  001E  1903               	skipnz
+  2764  001F  0270               	subwf	(VS1838ReceiveHandle@capdata),w
+  2765  0020  1803               	skipnc
+  2766  0021  2823               	goto	u254_21
+  2767  0022  2824               	goto	u254_20
+  2768  0023                     u254_21:
+  2769  0023  282A               	goto	i1l1146
+  2770  0024                     u254_20:
+  2771                           	line	277
+  2772                           	
+  2773  0024                     i1l3469:	
+  2774                           ;main.c: 277: VS1838_Status = 1;
+  2775  0024  1283               	bcf	status, 5	;RP0=0, select bank0
+  2776  0025  1303               	bcf	status, 6	;RP1=0, select bank0
+  2777  0026  01A7               	clrf	(_VS1838_Status)
+  2778  0027  1403               	bsf	status,0
+  2779  0028  0DA7               	rlf	(_VS1838_Status),f
+  2780                           	line	278
+  2781                           ;main.c: 278: } else {
+  2782  0029  28C4               	goto	i1l1158
+  2783                           	
+  2784  002A                     i1l1146:	
+  2785                           	line	279
+  2786                           ;main.c: 279: VS1838_Status = 0;
+  2787  002A  1283               	bcf	status, 5	;RP0=0, select bank0
+  2788  002B  1303               	bcf	status, 6	;RP1=0, select bank0
+  2789  002C  01A7               	clrf	(_VS1838_Status)
+  2790                           	line	280
+  2791                           ;main.c: 280: VS1838_Receive_Count = 0;
+  2792  002D  01A6               	clrf	(_VS1838_Receive_Count)
+  2793  002E  28C4               	goto	i1l1158
+  2794                           	line	281
+  2795                           	
+  2796  002F                     i1l1147:	
+  2797                           	line	282
+  2798                           ;main.c: 281: }
+  2799                           ;main.c: 282: break;
+  2800  002F  28C4               	goto	i1l1158
+  2801                           	line	283
+  2802                           ;main.c: 283: case 1:
+  2803                           	
+  2804  0030                     i1l1149:	
+  2805                           	line	284
+  2806                           	
+  2807  0030                     i1l3471:	
+  2808                           ;main.c: 284: if((capdata>=800)&&(capdata<=1500)) {
+  2809  0030  3003               	movlw	high(0320h)
+  2810  0031  0271               	subwf	(VS1838ReceiveHandle@capdata+1),w
+  2811  0032  3020               	movlw	low(0320h)
+  2812  0033  1903               	skipnz
+  2813  0034  0270               	subwf	(VS1838ReceiveHandle@capdata),w
+  2814  0035  1C03               	skipc
+  2815  0036  2838               	goto	u255_21
+  2816  0037  2839               	goto	u255_20
+  2817  0038                     u255_21:
+  2818  0038  2860               	goto	i1l3477
+  2819  0039                     u255_20:
+  2820                           	
+  2821  0039                     i1l3473:	
+  2822  0039  3005               	movlw	high(05DDh)
+  2823  003A  0271               	subwf	(VS1838ReceiveHandle@capdata+1),w
+  2824  003B  30DD               	movlw	low(05DDh)
+  2825  003C  1903               	skipnz
+  2826  003D  0270               	subwf	(VS1838ReceiveHandle@capdata),w
+  2827  003E  1803               	skipnc
+  2828  003F  2841               	goto	u256_21
+  2829  0040  2842               	goto	u256_20
+  2830  0041                     u256_21:
+  2831  0041  2860               	goto	i1l3477
+  2832  0042                     u256_20:
+  2833                           	line	285
+  2834                           	
+  2835  0042                     i1l3475:	
+  2836                           ;main.c: 285: VS838_Receive_Data=VS838_Receive_Data<<1;
+  2837  0042  087A               	movf	(_VS838_Receive_Data),w
+  2838  0043  00F2               	movwf	(??_VS1838ReceiveHandle+0)+0
+  2839  0044  087B               	movf	(_VS838_Receive_Data+1),w
+  2840  0045  00F3               	movwf	((??_VS1838ReceiveHandle+0)+0+1)
+  2841  0046  087C               	movf	(_VS838_Receive_Data+2),w
+  2842  0047  00F4               	movwf	((??_VS1838ReceiveHandle+0)+0+2)
+  2843  0048  087D               	movf	(_VS838_Receive_Data+3),w
+  2844  0049  00F5               	movwf	((??_VS1838ReceiveHandle+0)+0+3)
+  2845  004A  3001               	movlw	01h
+  2846  004B                     u257_25:
+  2847  004B  1003               	clrc
+  2848  004C  0DF2               	rlf	(??_VS1838ReceiveHandle+0)+0,f
+  2849  004D  0DF3               	rlf	(??_VS1838ReceiveHandle+0)+1,f
+  2850  004E  0DF4               	rlf	(??_VS1838ReceiveHandle+0)+2,f
+  2851  004F  0DF5               	rlf	(??_VS1838ReceiveHandle+0)+3,f
+  2852  0050                     u257_20:
+  2853  0050  3EFF               	addlw	-1
+  2854  0051  1D03               	skipz
+  2855  0052  284B               	goto	u257_25
+  2856  0053  0875               	movf	3+(??_VS1838ReceiveHandle+0)+0,w
+  2857  0054  00FD               	movwf	(_VS838_Receive_Data+3)
+  2858  0055  0874               	movf	2+(??_VS1838ReceiveHandle+0)+0,w
+  2859  0056  00FC               	movwf	(_VS838_Receive_Data+2)
+  2860  0057  0873               	movf	1+(??_VS1838ReceiveHandle+0)+0,w
+  2861  0058  00FB               	movwf	(_VS838_Receive_Data+1)
+  2862  0059  0872               	movf	0+(??_VS1838ReceiveHandle+0)+0,w
+  2863  005A  00FA               	movwf	(_VS838_Receive_Data)
+  2864                           
+  2865                           	line	286
+  2866                           ;main.c: 286: VS1838_Receive_Count++;
+  2867  005B  3001               	movlw	(01h)
+  2868  005C  00F2               	movwf	(??_VS1838ReceiveHandle+0)+0
+  2869  005D  0872               	movf	(??_VS1838ReceiveHandle+0)+0,w
+  2870  005E  07A6               	addwf	(_VS1838_Receive_Count),f
+  2871                           	line	287
+  2872                           ;main.c: 287: } else if((capdata >= 1800)&&(capdata <= 2800)) {
+  2873  005F  28AF               	goto	i1l3497
+  2874                           	
+  2875  0060                     i1l1150:	
+  2876                           	
+  2877  0060                     i1l3477:	
+  2878  0060  3007               	movlw	high(0708h)
+  2879  0061  0271               	subwf	(VS1838ReceiveHandle@capdata+1),w
+  2880  0062  3008               	movlw	low(0708h)
+  2881  0063  1903               	skipnz
+  2882  0064  0270               	subwf	(VS1838ReceiveHandle@capdata),w
+  2883  0065  1C03               	skipc
+  2884  0066  2868               	goto	u258_21
+  2885  0067  2869               	goto	u258_20
+  2886  0068                     u258_21:
+  2887  0068  289C               	goto	i1l1152
+  2888  0069                     u258_20:
+  2889                           	
+  2890  0069                     i1l3479:	
+  2891  0069  300A               	movlw	high(0AF1h)
+  2892  006A  0271               	subwf	(VS1838ReceiveHandle@capdata+1),w
+  2893  006B  30F1               	movlw	low(0AF1h)
+  2894  006C  1903               	skipnz
+  2895  006D  0270               	subwf	(VS1838ReceiveHandle@capdata),w
+  2896  006E  1803               	skipnc
+  2897  006F  2871               	goto	u259_21
+  2898  0070  2872               	goto	u259_20
+  2899  0071                     u259_21:
+  2900  0071  289C               	goto	i1l1152
+  2901  0072                     u259_20:
+  2902                           	line	288
+  2903                           	
+  2904  0072                     i1l3481:	
+  2905                           ;main.c: 288: VS838_Receive_Data=VS838_Receive_Data<<1;
+  2906  0072  087A               	movf	(_VS838_Receive_Data),w
+  2907  0073  00F2               	movwf	(??_VS1838ReceiveHandle+0)+0
+  2908  0074  087B               	movf	(_VS838_Receive_Data+1),w
+  2909  0075  00F3               	movwf	((??_VS1838ReceiveHandle+0)+0+1)
+  2910  0076  087C               	movf	(_VS838_Receive_Data+2),w
+  2911  0077  00F4               	movwf	((??_VS1838ReceiveHandle+0)+0+2)
+  2912  0078  087D               	movf	(_VS838_Receive_Data+3),w
+  2913  0079  00F5               	movwf	((??_VS1838ReceiveHandle+0)+0+3)
+  2914  007A  3001               	movlw	01h
+  2915  007B                     u260_25:
+  2916  007B  1003               	clrc
+  2917  007C  0DF2               	rlf	(??_VS1838ReceiveHandle+0)+0,f
+  2918  007D  0DF3               	rlf	(??_VS1838ReceiveHandle+0)+1,f
+  2919  007E  0DF4               	rlf	(??_VS1838ReceiveHandle+0)+2,f
+  2920  007F  0DF5               	rlf	(??_VS1838ReceiveHandle+0)+3,f
+  2921  0080                     u260_20:
+  2922  0080  3EFF               	addlw	-1
+  2923  0081  1D03               	skipz
+  2924  0082  287B               	goto	u260_25
+  2925  0083  0875               	movf	3+(??_VS1838ReceiveHandle+0)+0,w
+  2926  0084  00FD               	movwf	(_VS838_Receive_Data+3)
+  2927  0085  0874               	movf	2+(??_VS1838ReceiveHandle+0)+0,w
+  2928  0086  00FC               	movwf	(_VS838_Receive_Data+2)
+  2929  0087  0873               	movf	1+(??_VS1838ReceiveHandle+0)+0,w
+  2930  0088  00FB               	movwf	(_VS838_Receive_Data+1)
+  2931  0089  0872               	movf	0+(??_VS1838ReceiveHandle+0)+0,w
+  2932  008A  00FA               	movwf	(_VS838_Receive_Data)
+  2933                           
+  2934                           	line	289
+  2935                           	
+  2936  008B                     i1l3483:	
+  2937                           ;main.c: 289: VS838_Receive_Data=VS838_Receive_Data|0x0001;
+  2938  008B  3001               	movlw	01h
+  2939  008C  047A               	iorwf	(_VS838_Receive_Data),w
+  2940  008D  00FA               	movwf	(_VS838_Receive_Data)
+  2941  008E  3000               	movlw	0
+  2942  008F  047B               	iorwf	(_VS838_Receive_Data+1),w
+  2943  0090  00FB               	movwf	1+(_VS838_Receive_Data)
+  2944  0091  3000               	movlw	0
+  2945  0092  047C               	iorwf	(_VS838_Receive_Data+2),w
+  2946  0093  00FC               	movwf	2+(_VS838_Receive_Data)
+  2947  0094  3000               	movlw	0
+  2948  0095  047D               	iorwf	(_VS838_Receive_Data+3),w
+  2949  0096  00FD               	movwf	3+(_VS838_Receive_Data)
+  2950                           	line	290
+  2951                           	
+  2952  0097                     i1l3485:	
+  2953                           ;main.c: 290: VS1838_Receive_Count++;
+  2954  0097  3001               	movlw	(01h)
+  2955  0098  00F2               	movwf	(??_VS1838ReceiveHandle+0)+0
+  2956  0099  0872               	movf	(??_VS1838ReceiveHandle+0)+0,w
+  2957  009A  07A6               	addwf	(_VS1838_Receive_Count),f
+  2958                           	line	291
+  2959                           ;main.c: 291: } else {
+  2960  009B  28AF               	goto	i1l3497
+  2961                           	
+  2962  009C                     i1l1152:	
+  2963                           	line	292
+  2964                           ;main.c: 292: VS1838_Status = 0;
+  2965  009C  01A7               	clrf	(_VS1838_Status)
+  2966                           	line	293
+  2967                           	
+  2968  009D                     i1l3487:	
+  2969                           ;main.c: 293: VS838_Receive_Data = 0;
+  2970  009D  3000               	movlw	0
+  2971  009E  00FD               	movwf	(_VS838_Receive_Data+3)
+  2972  009F  3000               	movlw	0
+  2973  00A0  00FC               	movwf	(_VS838_Receive_Data+2)
+  2974  00A1  3000               	movlw	0
+  2975  00A2  00FB               	movwf	(_VS838_Receive_Data+1)
+  2976  00A3  3000               	movlw	0
+  2977  00A4  00FA               	movwf	(_VS838_Receive_Data)
+  2978                           
+  2979                           	line	294
+  2980                           	
+  2981  00A5                     i1l3489:	
+  2982                           ;main.c: 294: VS1838_Receive_Count = 0;
+  2983  00A5  01A6               	clrf	(_VS1838_Receive_Count)
+  2984  00A6  28AF               	goto	i1l3497
+  2985                           	line	295
+  2986                           	
+  2987  00A7                     i1l1153:	
+  2988  00A7  28AF               	goto	i1l3497
+  2989                           	
+  2990  00A8                     i1l1151:	
+  2991                           	line	297
+  2992                           ;main.c: 295: }
+  2993                           ;main.c: 297: while(VS1838_Receive_Count == 32) {
+  2994  00A8  28AF               	goto	i1l3497
+  2995                           	
+  2996  00A9                     i1l1155:	
+  2997                           	line	298
+  2998                           	
+  2999  00A9                     i1l3491:	
+  3000                           ;main.c: 298: VS1838_receive_ok = 1;
+  3001  00A9  01A8               	clrf	(_VS1838_receive_ok)
+  3002  00AA  1403               	bsf	status,0
+  3003  00AB  0DA8               	rlf	(_VS1838_receive_ok),f
+  3004                           	line	299
+  3005                           	
+  3006  00AC                     i1l3493:	
+  3007                           ;main.c: 299: VS1838_Status = 0;
+  3008  00AC  01A7               	clrf	(_VS1838_Status)
+  3009                           	line	300
+  3010                           	
+  3011  00AD                     i1l3495:	
+  3012                           ;main.c: 300: VS1838_Receive_Count = 0;
+  3013  00AD  01A6               	clrf	(_VS1838_Receive_Count)
+  3014                           	line	301
+  3015                           ;main.c: 301: break;
+  3016  00AE  28C4               	goto	i1l1158
+  3017                           	line	302
+  3018                           	
+  3019  00AF                     i1l1154:	
+  3020                           	line	297
+  3021                           	
+  3022  00AF                     i1l3497:	
+  3023  00AF  0826               	movf	(_VS1838_Receive_Count),w
+  3024  00B0  3A20               	xorlw	020h
+  3025  00B1  1903               	skipnz
+  3026  00B2  28B4               	goto	u261_21
+  3027  00B3  28B5               	goto	u261_20
+  3028  00B4                     u261_21:
+  3029  00B4  28A9               	goto	i1l3491
+  3030  00B5                     u261_20:
+  3031  00B5  28C4               	goto	i1l1158
+  3032                           	
+  3033  00B6                     i1l1156:	
+  3034                           	line	303
+  3035                           ;main.c: 302: }
+  3036                           ;main.c: 303: break;
+  3037  00B6  28C4               	goto	i1l1158
+  3038                           	line	304
+  3039                           ;main.c: 304: default : {
+  3040                           	
+  3041  00B7                     i1l1157:	
+  3042                           	line	306
+  3043                           ;main.c: 306: VS1838_Status=0;
+  3044  00B7  01A7               	clrf	(_VS1838_Status)
+  3045                           	line	308
+  3046                           ;main.c: 307: }
+  3047                           ;main.c: 308: break;
+  3048  00B8  28C4               	goto	i1l1158
+  3049                           	line	309
+  3050                           	
+  3051  00B9                     i1l3499:	
+  3052                           ;main.c: 309: }
+  3053  00B9  28C4               	goto	i1l1158
+  3054                           	line	274
+  3055                           	
+  3056  00BA                     i1l1144:	
+  3057                           	
+  3058  00BA                     i1l3501:	
+  3059  00BA  1283               	bcf	status, 5	;RP0=0, select bank0
+  3060  00BB  1303               	bcf	status, 6	;RP1=0, select bank0
+  3061  00BC  0827               	movf	(_VS1838_Status),w
+  3062                           	; Switch size 1, requested type "space"
+  3063                           ; Number of cases is 2, Range of values is 0 to 1
+  3064                           ; switch strategies available:
+  3065                           ; Name         Instructions Cycles
+  3066                           ; simple_byte            7     4 (average)
+  3067                           ; direct_byte            8     6 (fixed)
+  3068                           ; jumptable            260     6 (fixed)
+  3069                           ; rangetable             6     6 (fixed)
+  3070                           ; spacedrange           10     9 (fixed)
+  3071                           ; locatedrange           2     3 (fixed)
+  3072                           ;	Chosen strategy is simple_byte
+  3073                           
+  3074                           	opt asmopt_off
+  3075  00BD  3A00               	xorlw	0^0	; case 0
+  3076  00BE  1903               	skipnz
+  3077  00BF  2812               	goto	i1l3465
+  3078  00C0  3A01               	xorlw	1^0	; case 1
+  3079  00C1  1903               	skipnz
+  3080  00C2  2830               	goto	i1l3471
+  3081  00C3  28B7               	goto	i1l1157
+  3082                           	opt asmopt_on
+  3083                           
+  3084                           	line	309
+  3085                           	
+  3086  00C4                     i1l1148:	
+  3087                           	line	310
+  3088                           	
+  3089  00C4                     i1l1158:	
+  3090  00C4  0008               	return
+  3091                           	opt stack 0
+  3092                           GLOBAL	__end_of_VS1838ReceiveHandle
+  3093  00C5                     	__end_of_VS1838ReceiveHandle:
+  3094 ;; =============== function _VS1838ReceiveHandle ends ============
+  3095                           
+  3096                           	signat	_VS1838ReceiveHandle,4216
+  3097                           	global	_GetCCP1Value
+  3098                           psect	text451,local,class=CODE,delta=2
+  3099                           global __ptext451
+  3100  02B8                     __ptext451:
+  3101                           
+  3102 ;; *************** function _GetCCP1Value *****************
+  3103 ;; Defined at:
+  3104 ;;		line 251 in file "main.c"
+  3105 ;; Parameters:    Size  Location     Type
+  3106 ;;		None
+  3107 ;; Auto vars:     Size  Location     Type
+  3108 ;;  values          2    4[COMMON] unsigned int 
+  3109 ;; Return value:  Size  Location     Type
+  3110 ;;                  2    0[COMMON] unsigned int 
+  3111 ;; Registers used:
+  3112 ;;		wreg, status,2, status,0
+  3113 ;; Tracked objects:
+  3114 ;;		On entry : 0/0
+  3115 ;;		On exit  : 0/0
+  3116 ;;		Unchanged: 0/0
+  3117 ;; Data sizes:     COMMON   BANK0   BANK1
+  3118 ;;      Params:         2       0       0
+  3119 ;;      Locals:         2       0       0
+  3120 ;;      Temps:          2       0       0
+  3121 ;;      Totals:         6       0       0
+  3122 ;;Total ram usage:        6 bytes
+  3123 ;; Hardware stack levels used:    1
+  3124 ;; This function calls:
+  3125 ;;		Nothing
+  3126 ;; This function is called by:
+  3127 ;;		_ISR
+  3128 ;; This function uses a non-reentrant model
+  3129 ;;
+  3130                           psect	text451
+  3131                           	file	"main.c"
+  3132                           	line	251
+  3133                           	global	__size_of_GetCCP1Value
+  3134  001F                     	__size_of_GetCCP1Value	equ	__end_of_GetCCP1Value-_GetCCP1Value
+  3135                           	
+  3136  02B8                     _GetCCP1Value:	
+  3137                           	opt	stack 3
+  3138                           ; Regs used in _GetCCP1Value: [wreg+status,2+status,0]
+  3139                           	line	252
+  3140                           	
+  3141  02B8                     i1l3451:	
+  3142                           ;main.c: 252: unsigned int values=0;
+  3143  02B8  01F4               	clrf	(GetCCP1Value@values)
+  3144  02B9  01F5               	clrf	(GetCCP1Value@values+1)
+  3145                           	line	254
+  3146                           	
+  3147  02BA                     i1l3453:	
+  3148                           ;main.c: 254: values = CCPR1H;
+  3149  02BA  1283               	bcf	status, 5	;RP0=0, select bank0
+  3150  02BB  1303               	bcf	status, 6	;RP1=0, select bank0
+  3151  02BC  0814               	movf	(20),w	;volatile
+  3152  02BD  00F2               	movwf	(??_GetCCP1Value+0)+0
+  3153  02BE  01F3               	clrf	(??_GetCCP1Value+0)+0+1
+  3154  02BF  0872               	movf	0+(??_GetCCP1Value+0)+0,w
+  3155  02C0  00F4               	movwf	(GetCCP1Value@values)
+  3156  02C1  0873               	movf	1+(??_GetCCP1Value+0)+0,w
+  3157  02C2  00F5               	movwf	(GetCCP1Value@values+1)
+  3158                           	line	255
+  3159                           	
+  3160  02C3                     i1l3455:	
+  3161                           ;main.c: 255: values = values<<8;
+  3162  02C3  0874               	movf	(GetCCP1Value@values),w
+  3163  02C4  00F3               	movwf	(??_GetCCP1Value+0)+0+1
+  3164  02C5  01F2               	clrf	(??_GetCCP1Value+0)+0
+  3165  02C6  0872               	movf	0+(??_GetCCP1Value+0)+0,w
+  3166  02C7  00F4               	movwf	(GetCCP1Value@values)
+  3167  02C8  0873               	movf	1+(??_GetCCP1Value+0)+0,w
+  3168  02C9  00F5               	movwf	(GetCCP1Value@values+1)
+  3169                           	line	256
+  3170                           	
+  3171  02CA                     i1l3457:	
+  3172                           ;main.c: 256: values = values|CCPR1L;
+  3173  02CA  0874               	movf	(GetCCP1Value@values),w
+  3174  02CB  0413               	iorwf	(19),w	;volatile
+  3175  02CC  00F4               	movwf	(GetCCP1Value@values)
+  3176  02CD  0875               	movf	(GetCCP1Value@values+1),w
+  3177  02CE  00F5               	movwf	1+(GetCCP1Value@values)
+  3178                           	line	257
+  3179                           	
+  3180  02CF                     i1l3459:	
+  3181                           ;main.c: 257: return values;
+  3182  02CF  0875               	movf	(GetCCP1Value@values+1),w
+  3183  02D0  01F1               	clrf	(?_GetCCP1Value+1)
+  3184  02D1  07F1               	addwf	(?_GetCCP1Value+1)
+  3185  02D2  0874               	movf	(GetCCP1Value@values),w
+  3186  02D3  01F0               	clrf	(?_GetCCP1Value)
+  3187  02D4  07F0               	addwf	(?_GetCCP1Value)
+  3188                           
+  3189  02D5  2AD6               	goto	i1l1138
+  3190                           	
+  3191  02D6                     i1l3461:	
+  3192                           	line	258
+  3193                           	
+  3194  02D6                     i1l1138:	
+  3195  02D6  0008               	return
+  3196                           	opt stack 0
+  3197                           GLOBAL	__end_of_GetCCP1Value
+  3198  02D7                     	__end_of_GetCCP1Value:
+  3199 ;; =============== function _GetCCP1Value ends ============
+  3200                           
+  3201                           	signat	_GetCCP1Value,90
+  3202                           psect	text452,local,class=CODE,delta=2
+  3203                           global __ptext452
+  3204  0000                     __ptext452:
+  3205                           	global	btemp
+  3206  007E                     	btemp set 07Eh
+  3207                           
+  3208                           	DABS	1,126,2	;btemp
+  3209                           	global	wtemp0
+  3210  007E                     	wtemp0 set btemp
+
+
+HI-TECH Software PICC Macro Assembler V9.83 build 10920 
+Symbol Table                                                                                   Tue May 07 09:50:18 2019
+
+                          _RD 04E0                            _WR 04E8                            fsr 0004  
+      __end_of_Clean_countReg 033B                           _CM0 00C8                           _CM1 00C9  
+                         _CM2 00CA                           _GIE 005F                           _PC0 0038  
+                         _PC1 0039                           _PA5 002D                           _PC3 003B  
+                         _PC4 003C                           _PR2 0092                           _ISR 021E  
+                         _SR0 0CF6                           _SR1 0CF7                           fsr0 0004  
+                         indf 0000        __size_of_LED_Study_End 0031                          ?_ISR 0070  
+                        l1201 021D                          l1122 032D                          l1210 0274  
+                        l1211 0274                          l1115 02B2                          l1220 0297  
+                        l1116 02B3                          l1125 01EC                          l1117 02B6  
+                        l1214 0304                          l1118 02B7                          l1135 02EF  
+                        l1119 02B7                          l1161 01B8                          l1217 028C  
+                        l1162 01B7                          l1218 027A                          l1163 01B6  
+                        l1219 0297                          l1164 01BA                          l1180 014D  
+                        l1181 0120                          l1190 0141                          l1182 011F  
+                        l1174 00F0                          l1191 0147                          l1183 011A  
+                        l1175 00D7                          l1184 011E                          l1192 014E  
+                        l1176 00CF                          l1185 014C                          l1177 00DE  
+                        l1178 014E                          l1186 014B                          l1195 0323  
+                        l1187 012B                          l1179 0100                          l1188 013C  
+                        l1189 0148                          l1198 0319                          l3411 0327  
+                        l3413 0329                          l3421 02DE                          l3415 01BB  
+                        l3431 02E9                          l3423 02DF                          l3511 0187  
+                        l3409 0324                          l3433 02EC                          l3425 02E0  
+                        l3417 02D7                          l3521 01B5                          l3513 019C  
+                        l3505 014F                          l3601 025B                          l3435 02ED  
+                        l3427 02E3                          l3419 02DC                          l3515 01A0  
+                        l3507 0157                          l3523 01B8                          l3611 026B  
+                        l3603 0267                          l3437 02EE                          l3429 02E6  
+                        l3525 01BA                          l3517 01A6                          l3509 0181  
+                        l3613 026C                          l3605 0268                          l3621 00DE  
+                        l3519 01AA                          l3551 0310                          l3607 0269  
+                        l3631 00F6                          l3623 00E6                          l3615 00C5  
+                        l3553 0319                          l3609 026A                          l3641 0114  
+                        l3633 00FE                          l3625 00EC                          l3617 00CB  
+                        l3547 031A                          l3571 02F8                          l3651 012B  
+                        l3643 0115                          l3635 0100                          l3627 00ED  
+                        l3619 00D2                          l3549 0323                          l3573 02F9  
+                        l3581 0283                          l3661 0141                          l3653 0133  
+                        l3645 0118                          l3637 0107                          l3629 00EE  
+                        l3575 0304                          l3567 02F3                          l3591 0205  
+                        l3583 01ED                          l3655 013A                          l3639 010F  
+                        l3647 0120                          l3671 029C                          l3663 0298  
+                        l3569 02F4                          l3577 0275                          l3593 020D  
+                        l3585 01F0                          l3657 013B                          l3649 0128  
+                        l3681 02B3                          l3673 029F                          l3665 0299  
+                        l3579 027A                          l3595 0215                          l3587 01F5  
+                        l3659 013C                          l3683 02B4                          l3675 02A0  
+                        l3667 029A                          l3589 01FD                          l3597 0250  
+                        l3677 02A7                          l3669 029B                          l3599 0255  
+                        l3679 02AD                          _ADFM 00FF                          _ADON 00F8  
+                        _CHS0 00FA                          _CHS1 00FB                          _CHS2 00FC  
+                        _DIVS 04FF                          u2620 0157                          u2700 025B  
+                        u2621 0156                          u2701 025A                          u2630 0165  
+                        u2710 00CB                          u2711 00CA                          u2640 017A  
+                        u2720 00DD                          u2800 02AD                          u2721 00DC  
+                        u2801 02AC                          u2650 0187                          u2730 00F6  
+                        u2651 0186                          u2635 0160                          u2731 00F5  
+                        u2660 0195                          u2740 0107                          u2645 0175  
+                        u2741 0106                          u2670 01A6                          u2750 010F  
+                        u2671 01A5                          u2751 010E                          u2680 0296  
+                        u2760 0114                          u2665 0190                          u2681 0295  
+                        u2817 027E                          u2761 0113                          u2690 0255  
+                        u2770 0128                          u2691 0254                          u2771 0127  
+                        _PEIE 005E                          u2780 0133                          u2685 0292  
+                        u2781 0132                          u2790 0139                          u2791 0138  
+                        _TMR2 0011                          _STRA 0CE8                          _STRB 0CE9  
+                        _STRC 0CEA                          _STRD 0CEB                          _WREN 0C62  
+              ??_isKeyPressed 002B              ??_VS1838_Process 002B                          _main 0298  
+                        btemp 007E                          start 0010            __size_of_GPIO_Init 0032  
+              _Read_EEPROM_u8 02F0         __size_of_GetCCP1Value 001F               __end_of_Control 014F  
+        __size_of_System_init 000A                         ??_ISR 0076               ?_Clean_countReg 0070  
+         _VS1838ReceiveHandle 0011                         _C1SEN 0CF5                         _C2REN 0CF4  
+                       _ADCS0 04FC                         _ADCS1 04FD                         _ADCS2 04FE  
+                       ?_main 0070                         _EEADR 009B                         _EEDAT 009A  
+                       _CARRY 0018                         _EEPGD 0C67                         _VCFG0 00FD  
+                       _TMR1H 000F                         _TMR1L 000E                         _WPDA4 044C  
+                       _WPDC1 044B                         _WPDC2 044A                         _SRCON 019E  
+                       _WPDC3 0449                         _PULSR 0CF2                         _PULSS 0CF3  
+                       _WREN1 04E2                         _WREN2 04E4                         _WREN3 04E5  
+                       _WPUA0 04A8                         _WPUA1 04A9                         _WPUA2 04AA  
+                       _WPUA3 04AB                         _WPUC0 0440                         _WPUA4 04AC  
+                       _WPUC1 0441                         _WPUA5 04AD                         _WPUC2 0442  
+                       _WPUA6 04AE                         _WPUC3 0443                         _WPUA7 04AF  
+                       _WPUC4 0444                         _WPUC5 0445                    _Cycle_CCPR 0022  
+                       pclath 000A                  _GetCCP1Value 02B8          ?_VS1838ReceiveHandle 0070  
+                       status 0003                         wtemp0 007E        __end_of_Read_EEPROM_u8 0305  
+               _LED_Study_End 01ED            GetCCP1Value@values 0074                  __end_of_main 02B8  
+  VS1838ReceiveHandle@capdata 0070            __size_of_Delay_xms 0023                        ??_main 0035  
+           __end_of_GPIO_Init 01ED                        _ADCIN4 0020                        _ADCON0 001F  
+                      _CCP1IE 0468                        _CCP1IF 0068                        _ADRESH 001E  
+                      _ADRESL 009E                        _EEDATA 009A                        _CCPR1H 0014  
+                      _CCPR1L 0013                        _EECON1 009C                        _EECON2 009D  
+                      _ANSEL0 0488                        _ANSEL1 0489                        _ANSEL2 048A  
+                      _ANSEL3 048B                        _ANSEL4 048C                        _ANSEL5 048D  
+                      _ANSEL6 048E                        _ANSEL7 048F                        i1l1141 033A  
+                      i1l1150 0060                        i1l1151 00A8                        i1l1144 00BA  
+                      i1l1152 009C                        i1l1128 0240                        i1l1153 00A7  
+                      i1l1145 0012                        i1l1129 0240                        i1l1138 02D6  
+                      i1l1154 00AF                        i1l1146 002A                        i1l1155 00A9  
+                      i1l1147 002F                        i1l1148 00C4                        i1l1156 00B6  
+                      i1l1157 00B7                        i1l1149 0030                        i1l1158 00C4  
+                      i1l3501 00BA                        i1l3503 0336         ??_VS1838ReceiveHandle 0072  
+                      i1l3441 022C                        i1l3451 02B8                        i1l3443 022D  
+                      i1l3461 02D6                        i1l3453 02BA                        i1l3445 0236  
+                      i1l3455 02C3                        i1l3471 0030                        i1l3463 0011  
+                      i1l3447 0237                        i1l3439 021E                        i1l3457 02CA  
+                      i1l3481 0072                        i1l3473 0039                        i1l3465 0012  
+                      i1l3449 023E                        i1l3459 02CF                        i1l3491 00A9  
+                      i1l3483 008B                        i1l3475 0042                        i1l3467 001B  
+                      i1l3493 00AC                        i1l3485 0097                        i1l3477 0060  
+                      i1l3469 0024                        i1l3495 00AD                        i1l3487 009D  
+                      i1l3479 0069                        i1l3489 00A5                        i1l3497 00AF  
+                      i1l3499 00B9                        u260_20 0080                        u252_20 022C  
+                      u252_21 022B                        u260_25 007B                        u261_20 00B5  
+                      u253_20 001B                        u261_21 00B4                        u253_21 001A  
+                      u254_20 0024                        u254_21 0023                        u255_20 0039  
+                      u255_21 0038                        u256_20 0042                        u256_21 0041  
+                      u257_20 0050                        u257_25 004B                        u258_20 0069  
+                      u258_21 0068                        u259_20 0072                        u259_21 0071  
+                      _OSCCON 008F                        _TMR1CS 0081                        _TMR2IE 0461  
+                      _TMR2IF 0061                        _OPTION 0081                        _TMR1ON 0080  
+                      _TMR2ON 0092                        _WDTCON 0018                        _TRISA0 0428  
+                      _TRISA1 0429                        _TRISA2 042A                        _TRISA3 042B  
+                      _TRISC0 0438                        _TRISA4 042C                        _TRISC1 0439  
+                      _TRISA5 042D                        _TRISC2 043A                        _TRISA6 042E  
+                      _TRISC3 043B                        _TRISA7 042F                        _TRISC4 043C  
+                      _TRISC5 043D                     ??_Control 0034               ?_Read_EEPROM_u8 0070  
+              ?_LED_Study_End 0070                 ??_Timer1_Init 002B        Write_EEPROM_u8@EEDatas 0031  
+        __end_of_isKeyPressed 0324                        clrloop 032F      __size_of_Write_EEPROM_u8 0028  
+                      saved_w 007E             __end_of_Delay_xms 0298                __pcstackCOMMON 0070  
+     VS1838_Process@Address_H 0030       VS1838_Process@Address_L 0031           __end_of_Timer1_Init 02F0  
+          _VS838_Receive_Data 007A       Read_EEPROM_u8@EEAddress 002C               _StudyVS1838DATA 0024  
+                  __pbssBANK0 0020               ??_LED_Study_End 0031              ??_Clean_countReg 0070  
+                  __pmaintext 0298                 _VS1838_Status 0027                    __pintentry 0004  
+                     _CCP1CON 0015                       _T1CKPS0 0084                       _T1CKPS1 0085  
+                     _T2CKPS0 0090                       _T2CKPS1 0091                       _T1OSCEN 0083  
+                     _GO_DONE 00F9                       _PSTRCON 019D                       _TOUTPS0 0093  
+                     _TOUTPS1 0094                       _TOUTPS2 0095                       _TOUTPS3 0096  
+                     _STRSYNC 0CEC             ??_Write_EEPROM_u8 0032                       _Control 00C5  
+               ??_System_init 002B                  _flag_led_put 0029                    _isSwitchOn 0310  
+                 _Timer1_Init 02D7         __size_of_isKeyPressed 000A                  __size_of_ISR 002F  
+            ??_Read_EEPROM_u8 002B                     _GPIO_Init 01BB          end_of_initialization 030E  
+                _isKeyPressed 031A       __size_of_VS1838_Process 006C           __end_of_System_init 032E  
+ __end_of_VS1838ReceiveHandle 00C5                    ?_GPIO_Init 0070                   ?_isSwitchOn 0070  
+                   _Delay_xms 0275           start_initialization 0305                   __end_of_ISR 024D  
+                 _System_init 0324                    ?_Delay_xms 002B             _VS1838_receive_ok 0028  
+             _Write_EEPROM_u8 024D                   __pbssCOMMON 007A                 __pcstackBANK0 002B  
+         __size_of_isSwitchOn 000A                   ??_GPIO_Init 002B          _VS1838_Receive_Count 0026  
+               ?_GetCCP1Value 0070                      ?_Control 0070         __end_of_LED_Study_End 021E  
+                ?_Timer1_Init 0070                     __ptext440 0275                     __ptext441 02F0  
+                   __ptext450 0011                     __ptext442 0310                     __ptext451 02B8  
+                   __ptext443 031A                     __ptext452 0000                     __ptext444 014F  
+                   __ptext436 0000                _VS1838_Process 014F                     __ptext445 02D7  
+                   __ptext437 00C5                     __ptext446 01BB                     __ptext438 024D  
+                   __ptext447 0324                     __ptext439 01ED                     __ptext448 021E  
+                   __ptext449 0336                ??_GetCCP1Value 0072             interrupt_function 0004  
+                 ??_Delay_xms 002D        __end_of_VS1838_Process 01BB       __end_of_Write_EEPROM_u8 0275  
+     __size_of_Clean_countReg 0005          VS1838_Process@Data_H 0033          VS1838_Process@Data_L 0032  
+            __size_of_Control 008A                  ??_isSwitchOn 002B               ?_VS1838_Process 0070  
+    Write_EEPROM_u8@EEAddress 0032                   _VS1838_Data 0025            __end_of_isSwitchOn 031A  
+    Read_EEPROM_u8@EepromData 002D  __size_of_VS1838ReceiveHandle 00B4                 __size_of_main 0020  
+                ?_System_init 0070                      clear_ram 032E       __size_of_Read_EEPROM_u8 0015  
+        __size_of_Timer1_Init 0019              ?_Write_EEPROM_u8 0031          __end_of_GetCCP1Value 02D7  
+                    _vs_times 002A                    Delay_xms@i 002F                    Delay_xms@x 002B  
+                    intlevel1 0000                _Clean_countReg 0336                 ?_isKeyPressed 0070  
